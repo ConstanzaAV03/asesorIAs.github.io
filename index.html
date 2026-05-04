@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cadencIAsesorías — IA para empresas, al ritmo de tu gente</title>
+  <meta name="description" content="Asesorías de inteligencia artificial para empresas que quieren empezar bien. Capacitamos a ejecutivos y equipos sin tecnicismos, paso a paso." />
+  <meta property="og:title" content="cadencIAsesorías" />
+  <meta property="og:description" content="IA para empresas, al ritmo de tu gente." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23C56B4A'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============ Reset + base ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Manrope', system-ui, sans-serif;
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--carbon);
+      background: var(--crema);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ============ Palette + tokens ============ */
+    :root {
+      --tinta: #0A1F3D;
+      --tinta-soft: #14325C;
+      --crema: #EAF2F8;
+      --crema-deep: #D4E4F0;
+      --terracota: #0EA5E9;
+      --terracota-deep: #0284C7;
+      --salvia: #06B6D4;
+      --carbon: #1F1F1F;
+      --carbon-soft: #555;
+      --line: rgba(31, 31, 31, 0.12);
+      --container: 1180px;
+      --r-md: 8px;
+      --r-lg: 16px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ============ Typography ============ */
+    h1, h2, h3, h4, .display {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--tinta);
+    }
+    h1 { font-size: clamp(2.4rem, 6vw, 4.6rem); font-variation-settings: "opsz" 144, "SOFT" 50; }
+    h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
+    h3 { font-size: clamp(1.2rem, 2vw, 1.45rem); font-weight: 500; }
+    p { color: var(--carbon-soft); }
+    .eyebrow {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terracota);
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+    em { font-style: italic; color: var(--terracota); }
+    .ia-mark { color: var(--terracota); font-style: italic; }
+
+    /* ============ Layout helpers ============ */
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 2.5rem); }
+    section { padding: clamp(4rem, 9vw, 7rem) 0; }
+    .section-divider { height: 1px; background: var(--line); max-width: var(--container); margin: 0 auto; }
+
+    /* ============ Nav ============ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: 1rem 0;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(234, 242, 248, 0.7);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled { border-bottom-color: var(--line); background: rgba(234, 242, 248, 0.85); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--tinta);
+      text-decoration: none;
+    }
+    .brand .ia-mark { font-weight: 500; }
+    .nav-links { display: flex; gap: 2.2rem; align-items: center; }
+    .nav-links a {
+      font-size: 0.92rem;
+      color: var(--tinta);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--terracota); }
+    .nav-cta {
+      padding: 0.55rem 1.1rem;
+      background: var(--tinta);
+      color: var(--crema) !important;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+    .nav-cta:hover { background: var(--terracota) !important; color: var(--crema) !important; }
+    .menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--crema); padding: 1.5rem 2rem; gap: 1.2rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .menu-toggle { display: block; font-size: 1.4rem; color: var(--tinta); }
+    }
+
+    /* ============ Hero ============ */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center;
+      padding-top: 80px;
+      overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-content > * {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s var(--ease) forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.55s; }
+    .hero h1 .word { display: inline-block; }
+    .hero h1 .accent {
+      font-style: italic;
+      color: var(--terracota);
+      font-weight: 300;
+    }
+    .hero-sub {
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      color: var(--carbon-soft);
+      margin-top: 1.6rem;
+      max-width: 520px;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.95rem 1.6rem;
+      border-radius: 999px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 500;
+      font-size: 0.98rem;
+      text-decoration: none;
+      transition: all 0.3s var(--ease);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--tinta); color: var(--crema); }
+    .btn-primary:hover { background: var(--terracota); transform: translateY(-2px); }
+    .btn-ghost { color: var(--tinta); border-color: var(--tinta); background: transparent; }
+    .btn-ghost:hover { background: var(--tinta); color: var(--crema); }
+    .btn-arrow { transition: transform 0.3s var(--ease); }
+    .btn:hover .btn-arrow { transform: translateX(4px); }
+
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 120px; padding-bottom: 4rem; }
+    }
+
+    /* ============ Problema ============ */
+    .problema {
+      background: var(--crema-deep);
+      position: relative;
+    }
+    .problema-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .problema h2 { max-width: 360px; }
+    .problema-body p { font-size: 1.1rem; line-height: 1.7; max-width: 560px; }
+    .problema-body p + p { margin-top: 1.2rem; }
+    .pull-quote {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      color: var(--tinta);
+      line-height: 1.4;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--terracota);
+      margin-top: 2.5rem;
+      max-width: 560px;
+    }
+    @media (max-width: 820px) { .problema-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
+    /* ============ Proceso ============ */
+    .proceso-header { max-width: 640px; margin-bottom: 4rem; }
+    .proceso-header p { font-size: 1.1rem; margin-top: 1.2rem; }
+    .pasos { display: grid; gap: 0; }
+    .paso {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--line);
+      align-items: start;
+      transition: padding-left 0.4s var(--ease);
+    }
+    .paso:last-child { border-bottom: 1px solid var(--line); }
+    .paso:hover { padding-left: 1rem; }
+    .paso-num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.6rem;
+      font-weight: 300;
+      color: var(--terracota);
+      font-style: italic;
+      line-height: 1;
+    }
+    .paso-content h3 { margin-bottom: 0.6rem; color: var(--tinta); }
+    .paso-content p { max-width: 600px; }
+    @media (max-width: 600px) {
+      .paso { grid-template-columns: 1fr; gap: 0.5rem; }
+      .paso-num { font-size: 2rem; }
+    }
+
+    /* ============ Servicios ============ */
+    .servicios { background: var(--tinta); color: var(--crema); }
+    .servicios h2 { color: var(--crema); }
+    .servicios .eyebrow { color: var(--terracota); }
+    .servicios-header { max-width: 640px; margin-bottom: 4rem; }
+    .servicios-header p { color: rgba(245, 240, 232, 0.75); font-size: 1.1rem; margin-top: 1.2rem; }
+    .servicios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .servicio-card {
+      background: rgba(245, 240, 232, 0.04);
+      border: 1px solid rgba(245, 240, 232, 0.12);
+      border-radius: var(--r-lg);
+      padding: 2rem;
+      transition: all 0.4s var(--ease);
+    }
+    .servicio-card:hover {
+      background: rgba(245, 240, 232, 0.08);
+      transform: translateY(-4px);
+      border-color: var(--terracota);
+    }
+    .servicio-card.featured {
+      background: var(--terracota);
+      border-color: var(--terracota);
+    }
+    .servicio-card.featured:hover { background: var(--terracota-deep); }
+    .servicio-card h3 { color: var(--crema); margin-bottom: 0.5rem; }
+    .servicio-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--terracota);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .servicio-card.featured .servicio-tag { color: var(--crema); }
+    .servicio-card p { color: rgba(245, 240, 232, 0.78); margin-bottom: 1.2rem; }
+    .servicio-card.featured p { color: rgba(245, 240, 232, 0.9); }
+    .servicio-card ul { list-style: none; padding: 0; }
+    .servicio-card li {
+      padding: 0.5rem 0;
+      font-size: 0.95rem;
+      color: rgba(245, 240, 232, 0.85);
+      border-top: 1px solid rgba(245, 240, 232, 0.08);
+      display: flex; align-items: start; gap: 0.6rem;
+    }
+    .servicio-card li::before {
+      content: "→"; color: var(--terracota); flex-shrink: 0;
+    }
+    .servicio-card.featured li::before { color: var(--crema); }
+    .servicio-card.featured li { border-color: rgba(245, 240, 232, 0.18); }
+
+    /* ============ Áreas ============ */
+    .areas-header { max-width: 640px; margin-bottom: 3rem; }
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .area-card {
+      background: var(--crema-deep);
+      border-radius: var(--r-lg);
+      padding: 1.8rem 1.5rem;
+      transition: all 0.3s var(--ease);
+      border: 1px solid transparent;
+    }
+    .area-card:hover {
+      background: var(--crema);
+      border-color: var(--terracota);
+      transform: translateY(-3px);
+    }
+    .area-icon {
+      width: 36px; height: 36px;
+      margin-bottom: 1rem;
+      color: var(--terracota);
+    }
+    .area-card h4 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--tinta);
+      margin-bottom: 0.4rem;
+    }
+    .area-card p { font-size: 0.9rem; line-height: 1.5; }
+
+    /* ============ Sobre ============ */
+    .sobre { background: var(--crema-deep); }
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .sobre-img {
+      aspect-ratio: 4 / 5;
+      background: linear-gradient(135deg, var(--salvia) 0%, var(--tinta) 100%);
+      border-radius: var(--r-lg);
+      position: relative;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sobre-img::after {
+      content: "Foto del equipo";
+      color: rgba(245, 240, 232, 0.6);
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .sobre-text p { font-size: 1.1rem; line-height: 1.7; }
+    .sobre-text p + p { margin-top: 1.2rem; }
+    .signature {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--tinta);
+      margin-top: 2rem;
+    }
+    @media (max-width: 820px) { .sobre-grid { grid-template-columns: 1fr; } }
+
+    /* ============ FAQ ============ */
+    .faq-header { max-width: 640px; margin-bottom: 3rem; }
+    .faq-list { max-width: 820px; }
+    .faq-item {
+      border-top: 1px solid var(--line);
+      padding: 1.5rem 0;
+    }
+    .faq-item:last-child { border-bottom: 1px solid var(--line); }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer;
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--tinta);
+      list-style: none;
+      gap: 1rem;
+    }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-toggle {
+      width: 28px; height: 28px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--terracota);
+      color: var(--crema);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 300;
+      transition: transform 0.3s var(--ease);
+    }
+    details[open] .faq-toggle { transform: rotate(45deg); }
+    .faq-a {
+      padding-top: 1rem;
+      max-width: 720px;
+      animation: fadeUp 0.4s var(--ease);
+    }
+
+    /* ============ Contacto ============ */
+    .contacto { background: var(--tinta); color: var(--crema); }
+    .contacto h2 { color: var(--crema); }
+    .contacto .eyebrow { color: var(--terracota); }
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    .contacto-intro p { color: rgba(245, 240, 232, 0.8); margin-top: 1.2rem; font-size: 1.1rem; }
+    .contact-method {
+      display: flex; gap: 1rem; align-items: center;
+      padding: 1.2rem;
+      background: rgba(245, 240, 232, 0.05);
+      border: 1px solid rgba(245, 240, 232, 0.12);
+      border-radius: var(--r-md);
+      margin-top: 1rem;
+      text-decoration: none;
+      color: var(--crema);
+      transition: all 0.3s var(--ease);
+    }
+    .contact-method:hover {
+      background: rgba(245, 240, 232, 0.1);
+      border-color: var(--terracota);
+      transform: translateX(4px);
+    }
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: var(--terracota);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-method strong { display: block; font-weight: 500; }
+    .contact-method span { font-size: 0.9rem; color: rgba(245, 240, 232, 0.65); }
+
+    form {
+      background: rgba(245, 240, 232, 0.04);
+      border: 1px solid rgba(245, 240, 232, 0.12);
+      border-radius: var(--r-lg);
+      padding: 2rem;
+    }
+    .field { margin-bottom: 1.2rem; }
+    .field label {
+      display: block;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, 0.7);
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+    .field input, .field textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(245, 240, 232, 0.25);
+      padding: 0.6rem 0;
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--crema);
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field textarea:focus {
+      outline: none;
+      border-bottom-color: var(--terracota);
+    }
+    .field textarea { min-height: 90px; resize: vertical; }
+    form button {
+      background: var(--terracota);
+      color: var(--crema);
+      border: none;
+      padding: 0.95rem 1.8rem;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      width: 100%;
+    }
+    form button:hover { background: var(--terracota-deep); transform: translateY(-2px); }
+    .form-note { font-size: 0.78rem; color: rgba(245, 240, 232, 0.5); margin-top: 1rem; text-align: center; }
+    @media (max-width: 820px) { .contacto-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+
+    /* ============ Footer ============ */
+    footer {
+      padding: 3rem 0 2rem;
+      background: var(--crema);
+      border-top: 1px solid var(--line);
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-brand { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--tinta); }
+    .footer-meta { font-size: 0.88rem; color: var(--carbon-soft); }
+    .footer-meta a { color: var(--carbon-soft); text-decoration: none; }
+    .footer-meta a:hover { color: var(--terracota); }
+
+    /* ============ WhatsApp floating ============ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      width: 56px; height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
+      z-index: 100;
+      transition: all 0.3s var(--ease);
+    }
+    .whatsapp-float:hover { transform: scale(1.08); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+
+    /* ============ Animations ============ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============ Selection ============ */
+    ::selection { background: var(--terracota); color: var(--crema); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Nav ===== -->
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="brand">cadenc<span class="ia-mark">IA</span>sesorías</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#problema">El desafío</a>
+        <a href="#proceso">Cómo trabajamos</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#areas">Áreas</a>
+        <a href="#contacto" class="nav-cta">Agenda tu diagnóstico</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <header class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="eyebrow">Asesorías de inteligencia artificial</span>
+        <h1>
+          IA para tu empresa,<br />
+          al <span class="accent">ritmo</span> de tu gente.
+        </h1>
+        <p class="hero-sub">
+          Acompañamos a ejecutivos y equipos a dar los primeros pasos con IA en procesos reales — sin tecnicismos, sin jerga, sin dejar a nadie atrás.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contacto" class="btn btn-primary">
+            Agenda un diagnóstico gratuito
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#proceso" class="btn btn-ghost">Cómo trabajamos</a>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </header>
+
+  <!-- ===== Problema ===== -->
+  <section class="problema" id="problema">
+    <div class="container">
+      <div class="problema-grid reveal">
+        <div>
+          <span class="eyebrow">El desafío</span>
+          <h2>Tu equipo tiene experiencia. La IA tiene velocidad.</h2>
+        </div>
+        <div class="problema-body">
+          <p>
+            En los últimos dos años el panorama cambió. Herramientas que parecían ciencia ficción ahora resuelven en minutos lo que antes tomaba días: redactar un correo, analizar un contrato, ordenar una base de datos, atender consultas frecuentes.
+          </p>
+          <p>
+            El problema no es que tu equipo no quiera adoptarlas. Es que nadie les enseñó cómo, ni en qué procesos sí conviene usarlas y en cuáles no. Empezar por cuenta propia, además, da vergüenza.
+          </p>
+          <blockquote class="pull-quote">
+            Nuestro trabajo es que esa experiencia y esa velocidad vayan al mismo paso — sin que nadie sienta que va atrás.
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Proceso ===== -->
+  <section id="proceso">
+    <div class="container">
+      <div class="proceso-header reveal">
+        <span class="eyebrow">Cómo trabajamos</span>
+        <h2>Cuatro pasos, sin atajos.</h2>
+        <p>Empezamos por entenderte. Después capacitamos. Después implementamos. Y nos quedamos un tiempo, hasta que el equipo lo haga solo.</p>
+      </div>
+      <div class="pasos">
+        <div class="paso reveal">
+          <div class="paso-num">01</div>
+          <div class="paso-content">
+            <h3>Conversamos sin compromiso</h3>
+            <p>Una reunión de 45 minutos para entender tu empresa, tu equipo y qué procesos te están consumiendo más tiempo. Sin presentaciones formales, sin propuesta cerrada todavía.</p>
+          </div>
+        </div>
+        <div class="paso reveal">
+          <div class="paso-num">02</div>
+          <div class="paso-content">
+            <h3>Identificamos dónde la IA suma</h3>
+            <p>Te entregamos un diagnóstico con los procesos donde la IA puede generar valor real esta semana, esta cuartera y este año. Y los procesos donde es mejor no usarla.</p>
+          </div>
+        </div>
+        <div class="paso reveal">
+          <div class="paso-num">03</div>
+          <div class="paso-content">
+            <h3>Capacitamos a tu equipo</h3>
+            <p>Sesiones grupales o individuales, presenciales u online, con casos prácticos del rubro de tu empresa. Cero programación, cero jerga. Si no se entiende, no avanzamos.</p>
+          </div>
+        </div>
+        <div class="paso reveal">
+          <div class="paso-num">04</div>
+          <div class="paso-content">
+            <h3>Acompañamos la implementación</h3>
+            <p>Las primeras semanas hay dudas, errores, descubrimientos. Estamos disponibles por WhatsApp y en sesiones de seguimiento mientras tu equipo se afianza.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Servicios ===== -->
+  <section class="servicios" id="servicios">
+    <div class="container">
+      <div class="servicios-header reveal">
+        <span class="eyebrow">Servicios</span>
+        <h2>Tres formas de empezar.</h2>
+        <p>Cada empresa parte desde un punto distinto. Estos son los caminos más comunes — pero todo se ajusta a tu contexto.</p>
+      </div>
+      <div class="servicios-grid">
+        <div class="servicio-card reveal">
+          <span class="servicio-tag">Punto de partida</span>
+          <h3>Diagnóstico inicial</h3>
+          <p>Una conversación de 45 minutos, gratuita, para identificar oportunidades concretas en tu empresa.</p>
+          <ul>
+            <li>Conversación sin compromiso</li>
+            <li>Mapa de oportunidades por área</li>
+            <li>Recomendaciones priorizadas</li>
+          </ul>
+        </div>
+        <div class="servicio-card featured reveal">
+          <span class="servicio-tag">Más solicitado</span>
+          <h3>Capacitación grupal</h3>
+          <p>Talleres prácticos para equipos completos, con casos del rubro y herramientas listas para usar al día siguiente.</p>
+          <ul>
+            <li>4 a 8 sesiones en vivo</li>
+            <li>Material por área (RRHH, ventas, etc.)</li>
+            <li>Soporte por WhatsApp 30 días</li>
+            <li>Plantillas y prompts a medida</li>
+          </ul>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="servicio-tag">Para líderes</span>
+          <h3>Asesoría ejecutiva 1 a 1</h3>
+          <p>Sesiones privadas para ejecutivos que necesitan ponerse al día sin sentir que están retrocediendo.</p>
+          <ul>
+            <li>Sesiones individuales semanales</li>
+            <li>Confidencialidad absoluta</li>
+            <li>Ritmo a tu medida</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Áreas ===== -->
+  <section id="areas">
+    <div class="container">
+      <div class="areas-header reveal">
+        <span class="eyebrow">Áreas que cubrimos</span>
+        <h2>IA aplicada al trabajo real.</h2>
+        <p>No te vamos a hablar de modelos ni redes neuronales. Te mostramos cómo la IA se mete en el día a día de cada área de tu empresa.</p>
+      </div>
+      <div class="areas-grid">
+        <div class="area-card reveal">
+          <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+          <h4>Ventas</h4>
+          <p>Prospección automatizada, seguimiento de leads y cierres más rápidos.</p>
+        </div>
+        <div class="area-card reveal">
+          <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+          <h4>Marketing</h4>
+          <p>Generación de contenido, segmentación y análisis de campañas.</p>
+        </div>
+        <div class="area-card reveal">
+          <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><circle cx="17" cy="9" r="2"/></svg>
+          <h4>RRHH</h4>
+          <p>Filtros de CV, redacción de comunicados, evaluación de desempeño.</p>
+        </div>
+        <div class="area-card reveal">
+          <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          <h4>Finanzas</h4>
+          <p>Reportes automáticos, análisis de gastos, conciliaciones más rápidas.</p>
+        </div>
+        <div class="area-card reveal">
+          <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 10h6M9 14h6"/></svg>
+          <h4>Operaciones</h4>
+          <p>Documentación de procesos, manuales internos, planificación.</p>
+        </div>
+        <div class="area-card reveal">
+          <svg class="area-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+          <h4>Atención al cliente</h4>
+          <p>Respuestas más rápidas, resolución de FAQs, asistentes internos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Sobre ===== -->
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <div class="sobre-grid reveal">
+        <div class="sobre-img"></div>
+        <div class="sobre-text">
+          <span class="eyebrow">Sobre nosotros</span>
+          <h2>Empezamos con un equipo que no se atrevía ni a abrir un chat de IA.</h2>
+          <p>
+            Después de capacitar a más de [X] ejecutivos en empresas chilenas, entendimos algo: el problema no es la tecnología, es la pedagogía. Nadie quiere sentirse en desventaja, y mucho menos en su propio trabajo.
+          </p>
+          <p>
+            Por eso creamos cadencIAsesorías. Para que cualquier persona, sin importar su edad o relación con la tecnología, pueda usar la IA con la misma naturalidad con la que aprendió a usar el correo hace veinte años.
+          </p>
+          <p class="signature">— Equipo cadencIAsesorías</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2>Lo que más nos preguntan.</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary class="faq-q">¿Necesitamos saber programar? <span class="faq-toggle">+</span></summary>
+          <p class="faq-a">No. Ni una línea de código. Trabajamos con herramientas que se usan en lenguaje natural, como conversar con una persona. Si tu equipo sabe usar correo y WhatsApp, puede usar IA.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary class="faq-q">¿Es seguro con la información confidencial de mi empresa? <span class="faq-toggle">+</span></summary>
+          <p class="faq-a">Sí, si se hace bien. Parte de la asesoría es enseñar qué información sí se puede compartir con cada herramienta, qué configuraciones de privacidad activar y qué procesos sensibles conviene manejar con plataformas empresariales en lugar de versiones gratuitas.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary class="faq-q">¿Trabajan con empresas pequeñas? <span class="faq-toggle">+</span></summary>
+          <p class="faq-a">Sí. Atendemos desde equipos de 5 personas hasta empresas con cientos de colaboradores. Las pequeñas suelen avanzar más rápido porque la decisión la toman pocas personas.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary class="faq-q">¿Las sesiones son presenciales u online? <span class="faq-toggle">+</span></summary>
+          <p class="faq-a">Ambas. En la región Metropolitana de Chile vamos presencial cuando se necesita. Para regiones o equipos distribuidos trabajamos online por videollamada — funciona igual de bien y suele ser más cómodo.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary class="faq-q">¿Cuánto cuesta? <span class="faq-toggle">+</span></summary>
+          <p class="faq-a">El diagnóstico inicial es gratuito y sin compromiso. Las capacitaciones se cotizan según tamaño del equipo, formato y profundidad. Después del diagnóstico te entregamos una propuesta clara, con precio cerrado y sin sorpresas.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Contacto ===== -->
+  <section class="contacto" id="contacto">
+    <div class="container">
+      <div class="contacto-grid">
+        <div class="contacto-intro reveal">
+          <span class="eyebrow">Conversemos</span>
+          <h2>Empieza con un diagnóstico gratuito.</h2>
+          <p>45 minutos. Sin presentaciones rebuscadas. Solo conversamos qué hacen, qué les está pesando, y si la IA puede ayudar.</p>
+          <a href="https://wa.me/56900000000?text=Hola%20cadencIAsesor%C3%ADas%2C%20me%20gustar%C3%ADa%20agendar%20un%20diagn%C3%B3stico" target="_blank" rel="noopener" class="contact-method">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            </div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span>+56 9 0000 0000 — Respuesta en horario hábil</span>
+            </div>
+          </a>
+          <a href="mailto:hola@cadenciasesorias.cl" class="contact-method">
+            <div class="contact-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            </div>
+            <div>
+              <strong>Correo</strong>
+              <span>hola@cadenciasesorias.cl</span>
+            </div>
+          </a>
+        </div>
+        <div class="reveal">
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="field">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" name="nombre" required />
+            </div>
+            <div class="field">
+              <label for="empresa">Empresa</label>
+              <input type="text" id="empresa" name="empresa" />
+            </div>
+            <div class="field">
+              <label for="email">Correo</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="field">
+              <label for="mensaje">Cuéntanos brevemente</label>
+              <textarea id="mensaje" name="mensaje" placeholder="Tamaño del equipo, áreas, qué buscan resolver..." required></textarea>
+            </div>
+            <button type="submit">Enviar mensaje →</button>
+            <p class="form-note">Respondemos en menos de 24 horas hábiles.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">cadenc<span class="ia-mark">IA</span>sesorías</div>
+      <div class="footer-meta">
+        © 2026 · Santiago, Chile · <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== WhatsApp floating ===== -->
+  <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    /* ===== Hero 3D — particle wave ===== */
+    (function() {
+      if (typeof THREE === 'undefined') return;
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+
+      const scene = new THREE.Scene();
+      const hero = canvas.parentElement;
+      let w = hero.clientWidth, h = hero.clientHeight;
+
+      const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+      camera.position.z = 50;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(w, h);
+
+      // Particle wave
+      const cols = 60, rows = 40, spacing = 1.6;
+      const particleCount = cols * rows;
+      const positions = new Float32Array(particleCount * 3);
+      const baseY = new Float32Array(particleCount);
+
+      let i = 0;
+      for (let x = 0; x < cols; x++) {
+        for (let z = 0; z < rows; z++) {
+          const px = (x - cols / 2) * spacing;
+          const pz = (z - rows / 2) * spacing;
+          positions[i * 3] = px;
+          positions[i * 3 + 1] = 0;
+          positions[i * 3 + 2] = pz;
+          baseY[i] = 0;
+          i++;
+        }
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const material = new THREE.PointsMaterial({
+        color: 0xC56B4A,
+        size: 0.35,
+        transparent: true,
+        opacity: 0.55,
+        sizeAttenuation: true,
+      });
+
+      const points = new THREE.Points(geometry, material);
+      points.rotation.x = -0.55;
+      points.position.y = -8;
+      scene.add(points);
+
+      // Mouse parallax
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+        mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+      });
+
+      let t = 0;
+      function animate() {
+        t += 0.012;
+        const pos = geometry.attributes.position.array;
+        for (let n = 0; n < particleCount; n++) {
+          const x = pos[n * 3];
+          const z = pos[n * 3 + 2];
+          const dist = Math.sqrt(x * x + z * z);
+          pos[n * 3 + 1] = Math.sin(dist * 0.25 - t) * 2.2 + Math.cos(x * 0.15 + t * 0.7) * 0.8;
+        }
+        geometry.attributes.position.needsUpdate = true;
+
+        points.rotation.z += 0.0007;
+        camera.position.x += (mouseX * 4 - camera.position.x) * 0.04;
+        camera.position.y += (-mouseY * 2 - camera.position.y) * 0.04;
+        camera.lookAt(0, 0, 0);
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        w = hero.clientWidth; h = hero.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
+    })();
+
+    /* ===== Scroll reveal ===== */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ===== Nav scroll state ===== */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    });
+
+    /* ===== Mobile menu ===== */
+    const toggle = document.getElementById('menuToggle');
+    const links = document.getElementById('navLinks');
+    toggle?.addEventListener('click', () => links.classList.toggle('open'));
+    links?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+    /* ===== Form ===== */
+    const form = document.getElementById('contactForm');
+    form?.addEventListener('submit', (e) => {
+      // Si aún no configuras Formspree, evitamos el envío y damos feedback
+      if (form.action.includes('YOUR_FORM_ID')) {
+        e.preventDefault();
+        alert('¡Recibido! Recuerda configurar Formspree (o Web3Forms) y reemplazar YOUR_FORM_ID en el código.');
+      }
+    });
+  </script>
+</body>
+</html>
