@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>cadencIAsesorías — IA para empresas, al ritmo de tu gente</title>
   <meta name="description" content="Asesorías de inteligencia artificial para empresas que quieren empezar bien." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23FF5C3A'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%2338BDF8'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -14,13 +14,13 @@
     /* ============ Reset ============ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    html, body { background: #eee5fc; }
+    html, body { background: #0A1628; }
     body {
       font-family: 'Inter', system-ui, sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 1.5;
-      color: #F5F1EA;
+      color: #F8FAFC;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
       cursor: none;
@@ -28,15 +28,15 @@
 
     /* ============ Tokens ============ */
     :root {
-      --bg: #0A0A0A;
-      --bg-soft: #141414;
-      --bg-card: #1A1A1A;
-      --ink: #F5F1EA;
-      --ink-muted: rgba(245, 241, 234, 0.55);
-      --ink-faint: rgba(245, 241, 234, 0.25);
-      --line: rgba(245, 241, 234, 0.12);
-      --accent: #FF5C3A;
-      --accent-2: #FFB37A;
+      --bg: #0A1628;
+      --bg-soft: #0F2138;
+      --bg-card: #152942;
+      --ink: #F8FAFC;
+      --ink-muted: rgba(248, 250, 252, 0.6);
+      --ink-faint: rgba(248, 250, 252, 0.3);
+      --line: rgba(248, 250, 252, 0.1);
+      --accent: #38BDF8;
+      --accent-2: #10B981;
       --container: 1440px;
       --ease: cubic-bezier(0.7, 0, 0.2, 1);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -100,7 +100,7 @@
       margin-bottom: 1.5rem;
     }
     .section-num::before {
-      content: ""; width: 32px; height: 1px; background: var(--ink-faint);
+      content: ""; width: 32px; height: 1px; background: var(--accent-2);
     }
 
     /* ============ Nav ============ */
@@ -111,7 +111,7 @@
       transition: background 0.4s var(--ease), backdrop-filter 0.4s var(--ease);
     }
     nav.scrolled {
-      background: rgba(10, 10, 10, 0.7);
+      background: rgba(10, 22, 40, 0.75);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
     }
@@ -173,7 +173,7 @@
       font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--ink-muted);
     }
-    .hero-scroll-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
+    .hero-scroll-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-2); animation: pulse 2s ease-in-out infinite; }
     @keyframes pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
 
     .hero h1 {
@@ -234,7 +234,7 @@
     }
     .marquee-item .it { color: var(--accent); }
     .marquee-item::after {
-      content: "✦"; color: var(--accent); font-size: 1rem;
+      content: "✦"; color: var(--accent-2); font-size: 1rem;
     }
     @keyframes scroll {
       from { transform: translateX(0); }
@@ -355,7 +355,7 @@
     .servicio-card h3 { color: var(--ink); margin-bottom: 1rem; font-size: clamp(1.5rem, 2vw, 1.85rem); }
     .servicio-card.featured h3 { color: var(--bg); }
     .servicio-card p { color: var(--ink-muted); margin-bottom: 1.8rem; }
-    .servicio-card.featured p { color: rgba(10, 10, 10, 0.75); }
+    .servicio-card.featured p { color: rgba(10, 22, 40, 0.8); }
     .servicio-card ul { list-style: none; margin-top: auto; }
     .servicio-card li {
       padding: 0.7rem 0;
@@ -364,7 +364,7 @@
       border-top: 1px solid var(--line);
       display: flex; align-items: center; gap: 0.6rem;
     }
-    .servicio-card.featured li { color: var(--bg); border-color: rgba(10, 10, 10, 0.18); }
+    .servicio-card.featured li { color: var(--bg); border-color: rgba(10, 22, 40, 0.2); }
     .servicio-card li::before { content: "→"; color: var(--accent); }
     .servicio-card.featured li::before { color: var(--bg); }
 
