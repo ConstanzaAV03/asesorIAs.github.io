@@ -3,21 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>cadencIAsesorías</title>
-  <meta name="description" content="IA aplicada para empresas. Sin tecnicismos, al ritmo de tu gente." />
+  <title>cadencIAsesorías — IA para empresas, al ritmo de tu gente</title>
+  <meta name="description" content="Inteligencia artificial para tus procesos repetitivos. Sin tecnicismos, al ritmo de tu equipo." />
 
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23a855f7'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
 
-  <!-- Geist (cuerpo) -->
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- General Sans (titular) -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
 
   <style>
+    /* ============ Reset ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
     /* ============ Tokens ============ */
     :root {
+      /* Landing (hero) palette */
       --background: hsl(260 87% 3%);
       --foreground: hsl(40 6% 95%);
       --hero-sub: hsl(40 6% 82%);
@@ -25,24 +29,92 @@
       --foreground-80: hsla(40, 6%, 95%, 0.8);
       --foreground-50: hsla(40, 6%, 95%, 0.5);
       --foreground-20: hsla(40, 6%, 95%, 0.2);
+
+      /* Lusion (content) palette */
+      --bg: #0A1628;
+      --bg-soft: #0F2138;
+      --bg-card: #152942;
+      --ink: #F8FAFC;
+      --ink-muted: rgba(248, 250, 252, 0.6);
+      --ink-faint: rgba(248, 250, 252, 0.3);
+      --line: rgba(248, 250, 252, 0.1);
+      --accent: #38BDF8;
+      --accent-2: #10B981;
+      --container: 1440px;
+      --ease: cubic-bezier(0.7, 0, 0.2, 1);
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* ============ Reset ============ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    html, body { background: var(--bg); }
     body {
-      font-family: 'Geist', system-ui, -apple-system, sans-serif;
-      background: var(--background);
+      font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--foreground);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
+      cursor: none;
     }
-    button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
-    a { color: inherit; text-decoration: none; }
+
+    a { color: inherit; text-decoration: none; cursor: none; }
+    button, input, textarea { font: inherit; cursor: none; background: none; border: none; color: inherit; }
     img, svg { display: block; max-width: 100%; }
 
-    /* ============ Page wrapper ============ */
+    /* ============ Custom cursor ============ */
+    .cursor {
+      position: fixed; top: 0; left: 0;
+      width: 14px; height: 14px;
+      background: var(--ink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s var(--ease);
+    }
+    .cursor.hover { width: 56px; height: 56px; background: var(--accent); mix-blend-mode: normal; }
+    @media (max-width: 820px) {
+      body { cursor: auto; }
+      a, button, input, textarea { cursor: auto; }
+      .cursor { display: none; }
+    }
+
+    /* ============ Typography (lusion content) ============ */
+    h2, h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      letter-spacing: -0.025em;
+      line-height: 0.95;
+      color: var(--ink);
+    }
+    h2 { font-size: clamp(2.6rem, 7vw, 6.5rem); }
+    h3 { font-size: clamp(1.4rem, 2vw, 1.85rem); font-weight: 400; line-height: 1.15; }
+    .it { font-style: italic; font-weight: 300; color: var(--accent); }
+    .it-soft { font-style: italic; font-weight: 300; }
+    p { color: var(--ink-muted); font-size: clamp(1rem, 1.1vw, 1.1rem); }
+    .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* ============ Layout helpers ============ */
+    .wrap { max-width: var(--container); margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+    .lusion-section { padding: clamp(5rem, 12vw, 11rem) 0; position: relative; }
+    .row { display: grid; grid-template-columns: 1fr 3fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+    .row-narrow { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+    @media (max-width: 820px) { .row, .row-narrow { grid-template-columns: 1fr; gap: 1.5rem; } }
+    .section-num {
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-num::before {
+      content: ""; width: 32px; height: 1px; background: var(--accent-2);
+    }
+
+    /* ============ Index wrapper (hero with video) ============ */
     .index-wrapper {
       position: relative;
       width: 100%;
@@ -59,7 +131,6 @@
       pointer-events: none;
     }
 
-    /* ============ Hero section ============ */
     .hero-section {
       position: relative;
       z-index: 10;
@@ -67,7 +138,6 @@
       display: flex; flex-direction: column;
       overflow: visible;
     }
-    /* Blurred shape behind content */
     .bg-blur {
       position: absolute;
       top: 50%; left: 50%;
@@ -115,13 +185,14 @@
       color: transparent;
     }
 
-    .nav-center {
-      display: flex; gap: 0.5rem; align-items: center;
+    .nav-right {
+      display: flex; gap: 0.4rem; align-items: center;
     }
     .nav-item {
       display: inline-flex; align-items: center; gap: 0.3rem;
       padding: 0.45rem 0.9rem;
       color: var(--foreground-90);
+      font-family: 'Geist', sans-serif;
       font-size: 0.92rem;
       font-weight: 400;
       transition: color 0.2s ease;
@@ -135,30 +206,8 @@
       fill: none;
       opacity: 0.7;
     }
+    .nav-wa-icon { width: 14px; height: 14px; fill: currentColor; opacity: 0.85; }
 
-    /* Hero Secondary button (used for Sign Up + CTA) */
-    .btn-hero-secondary {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--foreground);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-    }
-    .btn-hero-secondary:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.24);
-    }
-    .nav-cta {
-      border-radius: 999px;
-      padding: 0.5rem 1rem;
-      font-size: 0.88rem;
-    }
-
-    /* Divider line below navbar */
     .nav-divider {
       height: 1px;
       margin-top: 3px;
@@ -166,7 +215,7 @@
       position: relative; z-index: 20;
     }
 
-    /* ============ Hero main content ============ */
+    /* ============ Hero main ============ */
     .hero-main {
       flex: 1;
       display: flex; flex-direction: column;
@@ -191,68 +240,37 @@
     }
     .hero-subtitle {
       color: var(--hero-sub);
+      font-family: 'Geist', sans-serif;
       font-size: 1.125rem;
-      line-height: 2rem;
-      max-width: 28rem;
-      margin-top: 9px;
-      opacity: 0.8;
+      line-height: 1.75rem;
+      max-width: 36rem;
+      margin-top: 14px;
+      opacity: 0.85;
+    }
+    .btn-hero-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--foreground);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      font-family: 'Geist', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.24);
     }
     .hero-cta {
       margin-top: 25px;
-      padding: 24px 29px;
+      padding: 22px 29px;
       border-radius: 999px;
       font-size: 0.95rem;
     }
 
-    /* ============ Logo marquee ============ */
-    .logo-marquee {
-      position: relative; z-index: 10;
-      max-width: 64rem;
-      margin: 0 auto;
-      padding: 0 2rem 2.5rem;
-      width: 100%;
-      display: flex; align-items: center; gap: 3rem;
-    }
-    .marquee-static {
-      flex-shrink: 0;
-      color: var(--foreground-50);
-      font-size: 0.875rem;
-      line-height: 1.4;
-    }
-    .marquee-window {
-      flex: 1;
-      overflow: hidden;
-      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-    }
-    .marquee-track {
-      display: flex; gap: 4rem;
-      width: max-content;
-      animation: scrollLogos 20s linear infinite;
-    }
-    @keyframes scrollLogos {
-      from { transform: translateX(0%); }
-      to { transform: translateX(-50%); }
-    }
-    .logo-item {
-      display: flex; align-items: center; gap: 0.6rem;
-      flex-shrink: 0;
-    }
-    .logo-mark {
-      width: 1.5rem; height: 1.5rem;
-      border-radius: 0.5rem;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'General Sans', sans-serif;
-      font-weight: 600; font-size: 0.72rem;
-      color: var(--foreground);
-    }
-    .logo-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--foreground);
-    }
-
-    /* ============ Liquid glass utility ============ */
+    /* ============ Liquid glass ============ */
     .liquid-glass {
       background: rgba(255, 255, 255, 0.01);
       background-blend-mode: luminosity;
@@ -265,8 +283,7 @@
     }
     .liquid-glass::before {
       content: "";
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       border-radius: inherit;
       padding: 1.4px;
       background: linear-gradient(180deg,
@@ -283,30 +300,511 @@
       pointer-events: none;
     }
 
-    /* ============ Responsive ============ */
+    /* ============ Marquee (lusion) ============ */
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 1.6rem 0;
+      background: var(--bg);
+    }
+    .marquee-track {
+      display: flex; gap: 4rem;
+      animation: marqueeScroll 35s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .marquee-item {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--ink);
+      display: flex; align-items: center; gap: 4rem;
+    }
+    .marquee-item .it { color: var(--accent); }
+    .marquee-item::after { content: "✦"; color: var(--accent-2); font-size: 1rem; }
+    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ============ Problema ============ */
+    .problema p {
+      font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+      line-height: 1.6;
+      color: var(--ink);
+      max-width: 720px;
+    }
+    .problema p + p { margin-top: 1.4rem; color: var(--ink-muted); }
+    .pull-quote {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-top: 3rem;
+      max-width: 880px;
+      letter-spacing: -0.01em;
+    }
+    .pull-quote .accent-line {
+      display: block; width: 60px; height: 1px; background: var(--accent); margin-bottom: 1.8rem;
+    }
+
+    /* ============ Proceso ============ */
+    .pasos { margin-top: 3rem; }
+    .paso {
+      display: grid;
+      grid-template-columns: 80px 1fr 2fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--line);
+      align-items: start;
+      transition: padding-left 0.6s var(--ease);
+      position: relative;
+    }
+    .paso:last-child { border-bottom: 1px solid var(--line); }
+    .paso::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 0; background: var(--accent);
+      transition: width 0.6s var(--ease);
+    }
+    .paso:hover { padding-left: 2rem; }
+    .paso:hover::before { width: 4px; }
+    .paso-num {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem; font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      padding-top: 0.5rem;
+    }
+    .paso-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+      font-weight: 400; line-height: 1.05;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+    }
+    .paso-content p { max-width: 560px; }
     @media (max-width: 820px) {
-      .nav-center { display: none; }
+      .paso { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 0; }
+      .paso:hover { padding-left: 1rem; }
+    }
+
+    /* ============ Servicios ============ */
+    .servicios-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+      margin-top: 4rem;
+    }
+    @media (max-width: 980px) { .servicios-grid { grid-template-columns: 1fr; } }
+    .servicio-card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2.5rem 2rem 2rem;
+      display: flex; flex-direction: column;
+      min-height: 420px;
+      transition: background 0.5s var(--ease), border-color 0.5s var(--ease), transform 0.5s var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .servicio-card::after {
+      content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 0; background: var(--accent);
+      transition: height 0.5s var(--ease);
+    }
+    .servicio-card:hover { background: var(--bg-soft); border-color: var(--accent); transform: translateY(-6px); }
+    .servicio-card:hover::after { height: 4px; }
+    .servicio-card.featured { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .servicio-card.featured:hover { background: #5fc6f8; transform: translateY(-6px); }
+    .servicio-tag {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500;
+      display: block; margin-bottom: 1.5rem;
+    }
+    .servicio-card.featured .servicio-tag { color: var(--bg); }
+    .servicio-card h3 { color: var(--ink); margin-bottom: 1rem; font-size: clamp(1.5rem, 2vw, 1.85rem); }
+    .servicio-card.featured h3 { color: var(--bg); }
+    .servicio-card p { color: var(--ink-muted); margin-bottom: 1.8rem; }
+    .servicio-card.featured p { color: rgba(10, 22, 40, 0.8); }
+    .servicio-card ul { list-style: none; margin-top: auto; }
+    .servicio-card li {
+      padding: 0.7rem 0; font-size: 0.92rem;
+      color: var(--ink);
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .servicio-card.featured li { color: var(--bg); border-color: rgba(10, 22, 40, 0.2); }
+    .servicio-card li::before { content: "→"; color: var(--accent); }
+    .servicio-card.featured li::before { color: var(--bg); }
+
+    /* ============ Casos / mockups ============ */
+    .casos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    @media (max-width: 980px) { .casos-grid { grid-template-columns: 1fr; } }
+    .tool-card { display: flex; flex-direction: column; gap: 1.6rem; }
+    .tool-card .tool-info { padding: 0 0.5rem; }
+    .tool-card .tool-info h3 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.4rem, 2vw, 1.7rem);
+      font-weight: 400; line-height: 1.15;
+      margin-bottom: 0.7rem;
+    }
+    .tool-card .tool-info p { color: var(--ink-muted); font-size: 0.95rem; max-width: 480px; }
+    .tool-card .tool-eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500;
+      display: block; margin-bottom: 0.8rem;
+    }
+    .window {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+      transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease), border-color 0.6s var(--ease);
+    }
+    .tool-card:hover .window {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 40px 80px -20px rgba(56, 189, 248, 0.2);
+    }
+    .window-bar {
+      height: 38px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; padding: 0 1rem; gap: 0.8rem;
+    }
+    .dots { display: flex; gap: 0.4rem; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; opacity: 0.7; }
+    .dot-r { background: #FF6B6B; }
+    .dot-y { background: #FDB84B; }
+    .dot-g { background: var(--accent-2); }
+    .window-title {
+      flex: 1; text-align: center;
+      font-size: 0.72rem; color: var(--ink-faint);
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+      letter-spacing: 0.05em;
+    }
+    .window-body { padding: 1.2rem; min-height: 300px; }
+
+    .excel-body { padding: 0; }
+    .excel-row { display: grid; grid-template-columns: 50px 1.4fr 1fr 0.8fr; border-bottom: 1px solid var(--line); }
+    .excel-row:last-child { border-bottom: none; }
+    .excel-cell {
+      padding: 0.85rem 1rem; font-size: 0.82rem;
+      color: var(--ink-muted);
+      border-right: 1px solid var(--line);
+      display: flex; align-items: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .excel-cell:last-child { border-right: none; }
+    .excel-row.excel-header .excel-cell {
+      background: rgba(248, 250, 252, 0.03);
+      color: var(--ink-faint);
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 500; padding: 0.7rem 1rem;
+    }
+    .excel-cell.idx {
+      background: rgba(248, 250, 252, 0.02);
+      color: var(--ink-faint);
+      font-size: 0.7rem; justify-content: center;
+    }
+    .excel-cell.up { color: var(--accent-2); }
+    .excel-cell .val { opacity: 0; animation: cellIn 0.5s var(--ease-out) forwards; }
+    .tool-card.visible .excel-row:nth-child(2) .val { animation-delay: 0.3s; }
+    .tool-card.visible .excel-row:nth-child(3) .val { animation-delay: 0.5s; }
+    .tool-card.visible .excel-row:nth-child(4) .val { animation-delay: 0.7s; }
+    .tool-card.visible .excel-row:nth-child(5) .val { animation-delay: 0.9s; }
+    @keyframes cellIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .ai-cell {
+      position: relative;
+      background: rgba(56, 189, 248, 0.08) !important;
+      color: var(--ink) !important;
+      font-weight: 500;
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+    .ai-badge {
+      position: absolute; top: -9px; left: 8px;
+      background: var(--accent); color: var(--bg);
+      font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 3px; font-weight: 700;
+      font-family: 'Inter', sans-serif;
+    }
+    .ai-pulse {
+      position: absolute; inset: -1px; border-radius: inherit;
+      pointer-events: none;
+      box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5);
+      animation: aiPulse 2.4s ease-out infinite;
+    }
+    @keyframes aiPulse {
+      0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+      80%, 100% { box-shadow: 0 0 0 12px rgba(56, 189, 248, 0); }
+    }
+
+    .dash-body { padding: 1.4rem; }
+    .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .dash-stat {
+      background: rgba(248, 250, 252, 0.03);
+      border: 1px solid var(--line);
+      border-radius: 6px; padding: 1rem;
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .dash-stat .dash-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; }
+    .dash-stat .dash-num { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 400; color: var(--ink); line-height: 1; }
+    .dash-stat .dash-trend { font-size: 0.7rem; letter-spacing: 0.05em; color: var(--accent-2); font-weight: 500; }
+    .dash-chart {
+      grid-column: span 2;
+      background: rgba(248, 250, 252, 0.03);
+      border: 1px solid var(--line);
+      border-radius: 6px; padding: 1rem;
+      display: flex; align-items: flex-end; gap: 6px;
+      height: 110px; position: relative;
+    }
+    .dash-chart::before {
+      content: "Últimos 7 días"; position: absolute; top: 0.7rem; left: 1rem;
+      font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint);
+    }
+    .bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      border-radius: 2px 2px 0 0;
+      height: 0;
+      transition: height 1s var(--ease-out);
+      opacity: 0.85;
+    }
+    .tool-card.visible .bar { height: var(--h); }
+    .tool-card.visible .bar:nth-child(1) { transition-delay: 0.2s; }
+    .tool-card.visible .bar:nth-child(2) { transition-delay: 0.3s; }
+    .tool-card.visible .bar:nth-child(3) { transition-delay: 0.4s; }
+    .tool-card.visible .bar:nth-child(4) { transition-delay: 0.5s; }
+    .tool-card.visible .bar:nth-child(5) { transition-delay: 0.6s; }
+    .tool-card.visible .bar:nth-child(6) { transition-delay: 0.7s; }
+    .tool-card.visible .bar:nth-child(7) { transition-delay: 0.8s; }
+
+    .word-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 0.7rem; }
+    .doc-title { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--ink); letter-spacing: -0.01em; }
+    .doc-meta { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.4rem; }
+    .line-bar {
+      display: block; height: 6px;
+      background: var(--line); border-radius: 2px;
+      width: 0; transition: width 0.7s var(--ease-out);
+    }
+    .tool-card.visible .doc-paragraph:nth-of-type(1) .line-bar { width: var(--w); transition-delay: 0.2s; }
+    .tool-card.visible .doc-paragraph:nth-of-type(2) .line-bar { width: var(--w); transition-delay: 0.35s; }
+    .tool-card.visible .doc-paragraph:nth-of-type(3) .line-bar { width: var(--w); transition-delay: 0.5s; }
+    .doc-ai-section {
+      margin-top: 0.6rem; padding: 0.8rem;
+      background: rgba(56, 189, 248, 0.06);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+    }
+    .doc-ai-label { font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+    .doc-typing { font-family: 'Fraunces', serif; font-style: italic; font-size: 0.82rem; color: var(--ink); display: flex; align-items: center; gap: 2px; min-height: 1.2em; }
+    .typing-text { display: inline-block; overflow: hidden; white-space: nowrap; width: 0; vertical-align: bottom; }
+    .tool-card.visible .typing-text { animation: typing 2.4s steps(40, end) 0.8s forwards; }
+    @keyframes typing { to { width: 100%; } }
+    .caret { display: inline-block; width: 2px; height: 1em; background: var(--accent); animation: blink 0.8s step-end infinite; vertical-align: text-bottom; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .report-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 1rem; }
+    .report-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+    .report-title { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--ink); letter-spacing: -0.01em; }
+    .report-tag { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-2); font-weight: 600; padding: 4px 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 999px; white-space: nowrap; }
+    .report-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+    .r-stat { background: rgba(248, 250, 252, 0.03); border: 1px solid var(--line); border-radius: 6px; padding: 0.7rem; }
+    .r-num { display: block; font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--ink); line-height: 1; }
+    .r-label { display: block; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-faint); margin-top: 0.3rem; }
+    .report-chart { background: rgba(248, 250, 252, 0.03); border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem; height: 90px; }
+    .report-chart svg { width: 100%; height: 100%; display: block; }
+    .chart-line { stroke-dasharray: 220; stroke-dashoffset: 220; }
+    .tool-card.visible .chart-line { animation: drawLine 1.6s var(--ease-out) 0.4s forwards; }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+    .chart-fill { opacity: 0; }
+    .tool-card.visible .chart-fill { animation: fillIn 0.7s var(--ease-out) 1.8s forwards; }
+    @keyframes fillIn { to { opacity: 1; } }
+
+    /* ============ Áreas ============ */
+    .areas-list { margin-top: 3rem; }
+    .area-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 2fr 60px;
+      gap: 2rem; padding: 2rem 0;
+      border-top: 1px solid var(--line);
+      align-items: center;
+      transition: padding-left 0.5s var(--ease), background 0.5s var(--ease);
+      position: relative; cursor: none;
+    }
+    .area-row:last-child { border-bottom: 1px solid var(--line); }
+    .area-row:hover { padding-left: 1.5rem; background: rgba(56, 189, 248, 0.04); }
+    .area-row:hover .area-name { color: var(--accent); font-style: italic; }
+    .area-num { font-family: 'Fraunces', serif; font-size: 0.85rem; color: var(--ink-faint); letter-spacing: 0.1em; }
+    .area-name {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+      font-weight: 400; letter-spacing: -0.015em;
+      color: var(--ink);
+      transition: color 0.4s var(--ease), font-style 0.4s var(--ease);
+    }
+    .area-desc { color: var(--ink-muted); font-size: 0.95rem; max-width: 480px; }
+    .area-arrow { font-family: 'Fraunces', serif; font-size: 1.4rem; color: var(--ink-faint); text-align: right; transition: color 0.4s var(--ease), transform 0.4s var(--ease); }
+    .area-row:hover .area-arrow { color: var(--accent); transform: translateX(8px); }
+    @media (max-width: 820px) {
+      .area-row { grid-template-columns: 40px 1fr; gap: 0.6rem; padding: 1.5rem 0; }
+      .area-desc, .area-arrow { display: none; }
+    }
+
+    /* ============ Sobre ============ */
+    .sobre { background: var(--bg); border-top: 1px solid var(--line); }
+    .sobre-text p { color: var(--ink); font-size: clamp(1.05rem, 1.2vw, 1.2rem); line-height: 1.65; max-width: 660px; }
+    .sobre-text p + p { margin-top: 1.4rem; color: var(--ink-muted); }
+    .sobre-signature { margin-top: 3rem; font-family: 'Fraunces', serif; font-style: italic; font-size: 1.1rem; color: var(--ink-muted); }
+
+    /* ============ FAQ ============ */
+    .faq-list { margin-top: 3rem; }
+    .faq-item { border-top: 1px solid var(--line); padding: 0; }
+    .faq-item:last-child { border-bottom: 1px solid var(--line); }
+    .faq-item summary {
+      list-style: none; padding: 2rem 0; cursor: none;
+      display: flex; justify-content: space-between; align-items: center; gap: 2rem;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      font-weight: 400; letter-spacing: -0.01em;
+      color: var(--ink);
+      transition: color 0.4s var(--ease);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary:hover { color: var(--accent); }
+    .faq-toggle {
+      width: 36px; height: 36px;
+      border: 1px solid var(--ink-faint);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--ink);
+      transition: transform 0.4s var(--ease), background 0.4s var(--ease), border-color 0.4s var(--ease);
+      flex-shrink: 0;
+    }
+    .faq-item[open] .faq-toggle { transform: rotate(45deg); background: var(--accent); border-color: var(--accent); }
+    .faq-item p { padding-bottom: 2rem; max-width: 760px; color: var(--ink-muted); font-size: 1rem; line-height: 1.7; }
+
+    /* ============ Contacto ============ */
+    .contacto { background: var(--bg-soft); border-top: 1px solid var(--line); }
+    .contacto-h { font-size: clamp(2.6rem, 7vw, 6rem); max-width: 1000px; margin-bottom: 4rem; }
+    .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    @media (max-width: 820px) { .contacto-grid { grid-template-columns: 1fr; gap: 3rem; } }
+    .contact-method {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--line);
+      transition: padding-left 0.4s var(--ease);
+    }
+    .contact-method:last-child { border-bottom: 1px solid var(--line); }
+    .contact-method:hover { padding-left: 0.8rem; }
+    .contact-method:hover strong { color: var(--accent); }
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: rgba(248, 250, 252, 0.06);
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-method strong { display: block; font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 400; color: var(--ink); transition: color 0.4s var(--ease); }
+    .contact-method span { color: var(--ink-muted); font-size: 0.85rem; }
+
+    form { display: flex; flex-direction: column; gap: 1.4rem; }
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); font-weight: 500; }
+    .field input, .field textarea {
+      background: transparent;
+      border: none; border-bottom: 1px solid var(--line);
+      padding: 0.7rem 0; color: var(--ink);
+      font-size: 1rem;
+      transition: border-color 0.3s var(--ease);
+      font-family: 'Inter', sans-serif;
+    }
+    .field input:focus, .field textarea:focus { outline: none; border-bottom-color: var(--accent); }
+    .field textarea { min-height: 100px; resize: vertical; }
+    .submit-btn {
+      align-self: flex-start; margin-top: 1rem;
+      padding: 1rem 1.8rem;
+      background: var(--ink); color: var(--bg);
+      border-radius: 999px;
+      font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
+      transition: background 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+    .submit-btn:hover { background: var(--accent); transform: translateY(-2px); }
+    .form-note { font-size: 0.78rem; color: var(--ink-faint); margin-top: 0.5rem; }
+
+    /* ============ Footer ============ */
+    .site-footer { padding: 5rem 0 3rem; border-top: 1px solid var(--line); }
+    .footer-display {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(4rem, 18vw, 18rem);
+      font-weight: 400; letter-spacing: -0.04em; line-height: 0.85;
+      color: var(--ink); margin-bottom: 3rem;
+    }
+    .footer-display .it { color: var(--accent); font-weight: 300; }
+    .footer-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 2rem; border-top: 1px solid var(--line);
+      font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-muted); flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-meta a:hover { color: var(--accent); }
+
+    /* ============ WhatsApp floating ============ */
+    .whatsapp-float {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      width: 52px; height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
+      z-index: 90;
+      transition: transform 0.4s var(--ease);
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 26px; height: 26px; fill: white; }
+
+    /* ============ Reveal ============ */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 1s var(--ease-out), transform 1s var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .mask-line { display: block; overflow: hidden; }
+    .mask-line > span {
+      display: inline-block; transform: translateY(105%);
+      transition: transform 1s var(--ease-out);
+    }
+    .reveal.visible .mask-line > span { transform: translateY(0); }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    @media (max-width: 820px) {
+      .nav-right { gap: 0; }
+      .nav-item { padding: 0.4rem 0.5rem; font-size: 0.8rem; }
       .navbar { padding: 1rem 1.25rem; }
-      .hero-subtitle { font-size: 1rem; line-height: 1.6rem; }
+      .hero-subtitle { font-size: 1rem; line-height: 1.55rem; }
       .hero-cta { padding: 18px 22px; }
-      .logo-marquee { flex-direction: column; gap: 1.5rem; padding: 0 1.25rem 2rem; }
-      .marquee-static { text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .nav-item:not(.nav-wa) { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="index-wrapper">
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
 
-    <!-- Background video -->
+  <!-- ============ HERO + VIDEO ============ -->
+  <div class="index-wrapper">
     <video class="bg-video" id="bgVideo" muted playsinline preload="auto">
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4" type="video/mp4" />
     </video>
 
-    <!-- Hero section -->
     <section class="hero-section">
-
-      <!-- Blurred shape behind content -->
       <div class="bg-blur" aria-hidden="true"></div>
 
       <!-- Navbar -->
@@ -316,108 +814,511 @@
           <span class="nav-logo-text">cadenc<em>IA</em>sesorías</span>
         </a>
 
-        <div class="nav-center">
-          <button class="nav-item">
-            Servicios
+        <div class="nav-right">
+          <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="nav-item nav-wa">
+            <svg class="nav-wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            WhatsApp
+          </a>
+          <a href="#servicios" class="nav-item">Servicios</a>
+          <a href="#contacto" class="nav-item">Contacto</a>
+          <a href="#sobre" class="nav-item">
+            Información
             <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <button class="nav-item">Casos</button>
-          <button class="nav-item">Planes</button>
-          <button class="nav-item">
+          </a>
+          <a href="#proceso" class="nav-item">
             Aprende
             <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
+          </a>
         </div>
-
-        <button class="btn-hero-secondary nav-cta liquid-glass">Ingresar</button>
       </nav>
 
-      <!-- Divider -->
       <div class="nav-divider" aria-hidden="true"></div>
 
-      <!-- Main hero content -->
       <main class="hero-main">
         <h1 class="hero-headline">
           cadenc<span class="grad">IA</span>
         </h1>
         <p class="hero-subtitle">
-          La forma más humana de adoptar inteligencia artificial<br />
-          en tu equipo, sin tecnicismos.
+          Inteligencia artificial para tus procesos repetitivos.<br />
+          Sin tecnicismos, al ritmo de tu equipo.
         </p>
-        <button class="btn-hero-secondary hero-cta liquid-glass">
+        <a href="#contacto" class="btn-hero-secondary hero-cta liquid-glass">
           Agenda un diagnóstico
-        </button>
+        </a>
       </main>
+    </section>
+  </div>
 
-      <!-- Logo marquee -->
-      <div class="logo-marquee">
-        <div class="marquee-static">
-          Aplicado en empresas<br />de todo Chile
+  <!-- ============ MARQUEE 1 ============ -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">IA <span class="it">aplicada</span></span>
+      <span class="marquee-item">Capacitación <span class="it">a medida</span></span>
+      <span class="marquee-item">Sin <span class="it">tecnicismos</span></span>
+      <span class="marquee-item">Equipos <span class="it">reales</span></span>
+      <span class="marquee-item">IA <span class="it">aplicada</span></span>
+      <span class="marquee-item">Capacitación <span class="it">a medida</span></span>
+      <span class="marquee-item">Sin <span class="it">tecnicismos</span></span>
+      <span class="marquee-item">Equipos <span class="it">reales</span></span>
+    </div>
+  </div>
+
+  <!-- ============ PROBLEMA ============ -->
+  <section class="lusion-section problema" id="problema">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">02 — Desafío</span></div>
+          <h2>Tu equipo tiene <span class="it-soft">experiencia</span>. La IA tiene <span class="it">velocidad</span>.</h2>
         </div>
-        <div class="marquee-window">
-          <div class="marquee-track" id="marqueeTrack">
-            <!-- Set 1 -->
-            <div class="logo-item"><div class="logo-mark liquid-glass">V</div><span class="logo-name">Vortex</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">N</div><span class="logo-name">Nimbus</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">P</div><span class="logo-name">Prysma</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">C</div><span class="logo-name">Cirrus</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">K</div><span class="logo-name">Kynder</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">H</div><span class="logo-name">Halcyn</span></div>
-            <!-- Set 2 (duplicated for seamless loop) -->
-            <div class="logo-item"><div class="logo-mark liquid-glass">V</div><span class="logo-name">Vortex</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">N</div><span class="logo-name">Nimbus</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">P</div><span class="logo-name">Prysma</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">C</div><span class="logo-name">Cirrus</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">K</div><span class="logo-name">Kynder</span></div>
-            <div class="logo-item"><div class="logo-mark liquid-glass">H</div><span class="logo-name">Halcyn</span></div>
-          </div>
+        <div>
+          <p>En los últimos dos años el panorama cambió. Herramientas que parecían ciencia ficción ahora resuelven en minutos lo que antes tomaba días: redactar un correo, analizar un contrato, ordenar una base de datos, atender consultas frecuentes.</p>
+          <p>El problema no es que tu equipo no quiera adoptarlas. Es que nadie les enseñó cómo, ni en qué procesos sí conviene usarlas y en cuáles no. Empezar por cuenta propia, además, da vergüenza.</p>
+          <blockquote class="pull-quote">
+            <span class="accent-line"></span>
+            Nuestro trabajo es que esa <span class="it">experiencia</span> y esa <span class="it">velocidad</span> vayan al mismo paso — sin que nadie sienta que va atrás.
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESO ============ -->
+  <section class="lusion-section" id="proceso">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">03 — Proceso</span></div>
+          <h2>Cuatro pasos, <span class="it-soft">sin atajos</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.15rem; color: var(--ink); max-width: 560px;">
+            Empezamos por entenderte. Después capacitamos. Después implementamos. Y nos quedamos un tiempo, hasta que el equipo lo haga solo.
+          </p>
+        </div>
+      </div>
+      <div class="pasos">
+        <div class="paso reveal">
+          <div class="paso-num">— 01</div>
+          <div class="paso-title">Conversamos sin compromiso</div>
+          <div class="paso-content"><p>Una reunión de 45 minutos para entender tu empresa, tu equipo y qué procesos te están consumiendo más tiempo. Sin presentaciones formales, sin propuesta cerrada todavía.</p></div>
+        </div>
+        <div class="paso reveal">
+          <div class="paso-num">— 02</div>
+          <div class="paso-title">Identificamos dónde la IA suma</div>
+          <div class="paso-content"><p>Te entregamos un diagnóstico con los procesos donde la IA puede generar valor real esta semana, este trimestre y este año. Y los procesos donde es mejor no usarla.</p></div>
+        </div>
+        <div class="paso reveal">
+          <div class="paso-num">— 03</div>
+          <div class="paso-title">Capacitamos a tu equipo</div>
+          <div class="paso-content"><p>Sesiones grupales o individuales, presenciales u online, con casos prácticos del rubro de tu empresa. Cero programación, cero jerga. Si no se entiende, no avanzamos.</p></div>
+        </div>
+        <div class="paso reveal">
+          <div class="paso-num">— 04</div>
+          <div class="paso-title">Acompañamos la implementación</div>
+          <div class="paso-content"><p>Las primeras semanas hay dudas, errores, descubrimientos. Estamos disponibles por WhatsApp y en sesiones de seguimiento mientras tu equipo se afianza.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="lusion-section" id="servicios">
+    <div class="wrap">
+      <div class="row-narrow reveal">
+        <div>
+          <div class="section-num"><span class="meta">04 — Servicios</span></div>
+          <h2>Tres formas de <span class="it">empezar</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.1rem; color: var(--ink); max-width: 520px;">
+            Cada empresa parte desde un punto distinto. Estos son los caminos más comunes — pero todo se ajusta a tu contexto.
+          </p>
+        </div>
+      </div>
+      <div class="servicios-grid">
+        <div class="servicio-card reveal">
+          <span class="servicio-tag">Punto de partida</span>
+          <h3>Diagnóstico inicial</h3>
+          <p>Una conversación de 45 minutos, gratuita, para identificar oportunidades concretas en tu empresa.</p>
+          <ul>
+            <li>Conversación sin compromiso</li>
+            <li>Mapa de oportunidades por área</li>
+            <li>Recomendaciones priorizadas</li>
+          </ul>
+        </div>
+        <div class="servicio-card featured reveal">
+          <span class="servicio-tag">Más solicitado</span>
+          <h3>Capacitación grupal</h3>
+          <p>Talleres prácticos para equipos completos, con casos del rubro y herramientas listas para usar al día siguiente.</p>
+          <ul>
+            <li>4 a 8 sesiones en vivo</li>
+            <li>Material por área (RRHH, ventas, etc.)</li>
+            <li>Soporte por WhatsApp 30 días</li>
+            <li>Plantillas y prompts a medida</li>
+          </ul>
+        </div>
+        <div class="servicio-card reveal">
+          <span class="servicio-tag">Para líderes</span>
+          <h3>Asesoría ejecutiva 1 a 1</h3>
+          <p>Sesiones privadas para ejecutivos que necesitan ponerse al día sin sentir que están retrocediendo.</p>
+          <ul>
+            <li>Sesiones individuales semanales</li>
+            <li>Confidencialidad absoluta</li>
+            <li>Ritmo a tu medida</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASOS / MOCKUPS ============ -->
+  <section class="lusion-section" id="casos">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">05 — En la práctica</span></div>
+          <h2>Cómo se ve la IA en tu <span class="it">día a día</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.1rem; color: var(--ink); max-width: 520px;">
+            No es una caja negra. Son las herramientas que ya conoces — Excel, documentos, dashboards — funcionando más rápido y con más cabeza.
+          </p>
         </div>
       </div>
 
-    </section>
+      <div class="casos-grid">
+        <div class="tool-card reveal">
+          <div class="window">
+            <div class="window-bar">
+              <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+              <div class="window-title">ventas-2026.xlsx</div>
+            </div>
+            <div class="window-body excel-body">
+              <div class="excel-row excel-header">
+                <div class="excel-cell idx"></div>
+                <div class="excel-cell">Trimestre</div>
+                <div class="excel-cell">Ingresos</div>
+                <div class="excel-cell">Var.</div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">1</div>
+                <div class="excel-cell"><span class="val">Q1</span></div>
+                <div class="excel-cell"><span class="val">$ 12.4M</span></div>
+                <div class="excel-cell up"><span class="val">+8%</span></div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">2</div>
+                <div class="excel-cell"><span class="val">Q2</span></div>
+                <div class="excel-cell"><span class="val">$ 14.1M</span></div>
+                <div class="excel-cell up"><span class="val">+13%</span></div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">3</div>
+                <div class="excel-cell"><span class="val">Q3</span></div>
+                <div class="excel-cell"><span class="val">$ 13.8M</span></div>
+                <div class="excel-cell up"><span class="val">+11%</span></div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">4</div>
+                <div class="excel-cell"><span class="val">Total año</span></div>
+                <div class="excel-cell ai-cell">
+                  <span class="ai-badge">✦ IA</span>
+                  <span class="val">$ 54.8M</span>
+                  <span class="ai-pulse"></span>
+                </div>
+                <div class="excel-cell up"><span class="val">+12%</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-info">
+            <span class="tool-eyebrow">Excel · Hojas de cálculo</span>
+            <h3>Fórmulas y análisis en lenguaje natural.</h3>
+            <p>Pregúntale a tu planilla "¿cuál fue el mejor trimestre?" y obtén el resultado al instante — con la fórmula explicada, sin tener que recordarla.</p>
+          </div>
+        </div>
+
+        <div class="tool-card reveal">
+          <div class="window">
+            <div class="window-bar">
+              <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+              <div class="window-title">dashboard · tiempo real</div>
+            </div>
+            <div class="window-body dash-body">
+              <div class="dash-grid">
+                <div class="dash-stat">
+                  <span class="dash-label">Leads activos</span>
+                  <span class="dash-num" data-target="247" data-decimals="0">0</span>
+                  <span class="dash-trend">↗ +18% vs semana</span>
+                </div>
+                <div class="dash-stat">
+                  <span class="dash-label">Conversión</span>
+                  <span class="dash-num" data-target="12.4" data-decimals="1">0</span>
+                  <span class="dash-trend">↗ +3.2 pts</span>
+                </div>
+                <div class="dash-chart">
+                  <div class="bar" style="--h: 35%"></div>
+                  <div class="bar" style="--h: 55%"></div>
+                  <div class="bar" style="--h: 42%"></div>
+                  <div class="bar" style="--h: 70%"></div>
+                  <div class="bar" style="--h: 60%"></div>
+                  <div class="bar" style="--h: 88%"></div>
+                  <div class="bar" style="--h: 75%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-info">
+            <span class="tool-eyebrow">Reportes · Dashboards</span>
+            <h3>Métricas que se actualizan solas.</h3>
+            <p>Conecta tus datos una vez y la IA arma reportes diarios y dashboards en vivo que cualquier persona del equipo puede leer.</p>
+          </div>
+        </div>
+
+        <div class="tool-card reveal">
+          <div class="window">
+            <div class="window-bar">
+              <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+              <div class="window-title">propuesta-cliente.docx</div>
+            </div>
+            <div class="window-body word-body">
+              <div class="doc-title">Propuesta comercial — Q1 2026</div>
+              <div class="doc-meta">3 marzo · borrador</div>
+              <div class="doc-paragraph"><span class="line-bar" style="--w: 95%"></span></div>
+              <div class="doc-paragraph"><span class="line-bar" style="--w: 88%"></span></div>
+              <div class="doc-paragraph"><span class="line-bar" style="--w: 70%"></span></div>
+              <div class="doc-ai-section">
+                <div class="doc-ai-label">✦ IA · sugerencia de cierre</div>
+                <div class="doc-typing">
+                  <span class="typing-text">Quedamos atentos para coordinar.</span><span class="caret"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-info">
+            <span class="tool-eyebrow">Word · Documentos</span>
+            <h3>Redacción asistida, sin perder tu tono.</h3>
+            <p>Borradores de correos, propuestas y minutas en segundos. La IA escribe, tú decides qué se queda.</p>
+          </div>
+        </div>
+
+        <div class="tool-card reveal">
+          <div class="window">
+            <div class="window-bar">
+              <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+              <div class="window-title">reporte-mensual.pdf</div>
+            </div>
+            <div class="window-body report-body">
+              <div class="report-header">
+                <div class="report-title">Reporte mensual · Marzo</div>
+                <div class="report-tag">✦ Gen. en 8s</div>
+              </div>
+              <div class="report-stats">
+                <div class="r-stat"><span class="r-num">+24%</span><span class="r-label">crecimiento</span></div>
+                <div class="r-stat"><span class="r-num">$ 18.2M</span><span class="r-label">facturación</span></div>
+              </div>
+              <div class="report-chart">
+                <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="reportGrad" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="#38BDF8" stop-opacity="0.45" />
+                      <stop offset="1" stop-color="#10B981" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path class="chart-fill" d="M0,32 L15,26 L30,28 L45,16 L60,20 L75,10 L100,6 L100,40 L0,40 Z" fill="url(#reportGrad)" />
+                  <path class="chart-line" d="M0,32 L15,26 L30,28 L45,16 L60,20 L75,10 L100,6" stroke="#38BDF8" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="tool-info">
+            <span class="tool-eyebrow">Reportes automáticos</span>
+            <h3>Documentos PDF listos para enviar.</h3>
+            <p>De los datos crudos a un reporte ejecutivo con gráficos y conclusiones — generado en segundos, no en horas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ÁREAS ============ -->
+  <section class="lusion-section" id="areas">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">06 — Áreas</span></div>
+          <h2>IA aplicada al <span class="it-soft">trabajo real</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.1rem; color: var(--ink); max-width: 520px;">
+            No te vamos a hablar de modelos ni redes neuronales. Te mostramos cómo la IA se mete en el día a día de cada área de tu empresa.
+          </p>
+        </div>
+      </div>
+      <div class="areas-list reveal">
+        <div class="area-row"><div class="area-num">/ 01</div><div class="area-name">Ventas</div><div class="area-desc">Prospección automatizada, seguimiento de leads y cierres más rápidos.</div><div class="area-arrow">↗</div></div>
+        <div class="area-row"><div class="area-num">/ 02</div><div class="area-name">Marketing</div><div class="area-desc">Generación de contenido, segmentación y análisis de campañas.</div><div class="area-arrow">↗</div></div>
+        <div class="area-row"><div class="area-num">/ 03</div><div class="area-name">RRHH</div><div class="area-desc">Filtros de CV, redacción de comunicados, evaluación de desempeño.</div><div class="area-arrow">↗</div></div>
+        <div class="area-row"><div class="area-num">/ 04</div><div class="area-name">Finanzas</div><div class="area-desc">Reportes automáticos, análisis de gastos, conciliaciones más rápidas.</div><div class="area-arrow">↗</div></div>
+        <div class="area-row"><div class="area-num">/ 05</div><div class="area-name">Operaciones</div><div class="area-desc">Documentación de procesos, manuales internos, planificación.</div><div class="area-arrow">↗</div></div>
+        <div class="area-row"><div class="area-num">/ 06</div><div class="area-name">Atención al cliente</div><div class="area-desc">Respuestas más rápidas, resolución de FAQs, asistentes internos.</div><div class="area-arrow">↗</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE 2 ============ -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span class="marquee-item">Cero <span class="it">programación</span></span>
+      <span class="marquee-item">Cero <span class="it">jerga</span></span>
+      <span class="marquee-item">Cien <span class="it">por ciento</span> aplicado</span>
+      <span class="marquee-item">Cero <span class="it">programación</span></span>
+      <span class="marquee-item">Cero <span class="it">jerga</span></span>
+      <span class="marquee-item">Cien <span class="it">por ciento</span> aplicado</span>
+    </div>
   </div>
+
+  <!-- ============ SOBRE ============ -->
+  <section class="lusion-section sobre" id="sobre">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">07 — Estudio</span></div>
+          <h2>Empezamos con un equipo que <span class="it-soft">no se atrevía</span>.</h2>
+        </div>
+        <div class="sobre-text">
+          <p>Después de capacitar a más de [X] ejecutivos en empresas chilenas, entendimos algo: el problema no es la tecnología, es la pedagogía. Nadie quiere sentirse en desventaja, y mucho menos en su propio trabajo.</p>
+          <p>Por eso creamos cadencIAsesorías. Para que cualquier persona, sin importar su edad o relación con la tecnología, pueda usar la IA con la misma naturalidad con la que aprendió a usar el correo hace veinte años.</p>
+          <p class="sobre-signature">— Equipo cadencIAsesorías</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="lusion-section" id="faq">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">08 — Preguntas</span></div>
+          <h2>Lo que más nos <span class="it">preguntan</span>.</h2>
+        </div>
+        <div></div>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>¿Necesitamos saber programar? <span class="faq-toggle">+</span></summary>
+          <p>No. Ni una línea de código. Trabajamos con herramientas que se usan en lenguaje natural, como conversar con una persona. Si tu equipo sabe usar correo y WhatsApp, puede usar IA.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>¿Es seguro con información confidencial? <span class="faq-toggle">+</span></summary>
+          <p>Sí, si se hace bien. Parte de la asesoría es enseñar qué información sí se puede compartir con cada herramienta, qué configuraciones de privacidad activar y qué procesos sensibles conviene manejar con plataformas empresariales en lugar de versiones gratuitas.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>¿Trabajan con empresas pequeñas? <span class="faq-toggle">+</span></summary>
+          <p>Sí. Atendemos desde equipos de 5 personas hasta empresas con cientos de colaboradores. Las pequeñas suelen avanzar más rápido porque la decisión la toman pocas personas.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>¿Las sesiones son presenciales u online? <span class="faq-toggle">+</span></summary>
+          <p>Ambas. En la región Metropolitana de Chile vamos presencial cuando se necesita. Para regiones o equipos distribuidos trabajamos online por videollamada — funciona igual de bien y suele ser más cómodo.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>¿Cuánto cuesta? <span class="faq-toggle">+</span></summary>
+          <p>El diagnóstico inicial es gratuito y sin compromiso. Las capacitaciones se cotizan según tamaño del equipo, formato y profundidad. Después del diagnóstico te entregamos una propuesta clara, con precio cerrado y sin sorpresas.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="lusion-section contacto" id="contacto">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="section-num"><span class="meta">09 — Conversemos</span></div>
+        <h2 class="contacto-h">Empieza con un <span class="it">diagnóstico</span> gratuito.</h2>
+      </div>
+
+      <div class="contacto-grid">
+        <div class="reveal">
+          <p style="margin-bottom: 2.5rem; color: var(--ink); max-width: 460px;">
+            45 minutos. Sin presentaciones rebuscadas. Solo conversamos qué hacen, qué les está pesando, y si la IA puede ayudar.
+          </p>
+          <a href="https://wa.me/56900000000?text=Hola%20cadencIAsesor%C3%ADas%2C%20me%20gustar%C3%ADa%20agendar%20un%20diagn%C3%B3stico" target="_blank" rel="noopener" class="contact-method">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#F8FAFC"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            </div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span>+56 9 0000 0000 — Respuesta en horario hábil</span>
+            </div>
+          </a>
+          <a href="mailto:hola@cadenciasesorias.cl" class="contact-method">
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F8FAFC" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            </div>
+            <div>
+              <strong>Correo</strong>
+              <span>hola@cadenciasesorias.cl</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="reveal">
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" required /></div>
+            <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" name="empresa" /></div>
+            <div class="field"><label for="email">Correo</label><input type="email" id="email" name="email" required /></div>
+            <div class="field"><label for="mensaje">Cuéntanos brevemente</label><textarea id="mensaje" name="mensaje" placeholder="Tamaño del equipo, áreas, qué buscan resolver..." required></textarea></div>
+            <button type="submit" class="submit-btn">Enviar mensaje →</button>
+            <p class="form-note">Respondemos en menos de 24 horas hábiles.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-display reveal">
+        <span class="mask-line"><span>cadenc<span class="it">IA</span>—</span></span>
+      </div>
+      <div class="footer-meta">
+        <div>© 2026 — Santiago, Chile</div>
+        <div><a href="#contacto">hola@cadenciasesorias.cl</a></div>
+        <div>Todos los derechos reservados</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating button -->
+  <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
 
   <script>
     /* ===== Background video fade loop ===== */
     (function() {
       const video = document.getElementById('bgVideo');
       if (!video) return;
-
-      const FADE = 0.5; // seconds for fade in / out
-      let raf = null;
-      let resetting = false;
-
+      const FADE = 0.5;
+      let raf = null, resetting = false;
       function tick() {
-        if (resetting) {
-          raf = requestAnimationFrame(tick);
-          return;
-        }
-        const t = video.currentTime;
-        const d = video.duration;
+        if (resetting) { raf = requestAnimationFrame(tick); return; }
+        const t = video.currentTime, d = video.duration;
         if (!isNaN(d) && d > 0) {
           let opacity = 1;
-          if (t < FADE) {
-            opacity = t / FADE;
-          } else if (t > d - FADE) {
-            opacity = Math.max(0, (d - t) / FADE);
-          }
+          if (t < FADE) opacity = t / FADE;
+          else if (t > d - FADE) opacity = Math.max(0, (d - t) / FADE);
           video.style.opacity = opacity.toFixed(3);
         }
         raf = requestAnimationFrame(tick);
       }
-
       video.addEventListener('loadedmetadata', () => {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.catch === 'function') {
-          playPromise.catch(() => { /* autoplay blocked — silent fallback */ });
-        }
+        const p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
       });
-
-      video.addEventListener('play', () => {
-        if (raf) cancelAnimationFrame(raf);
-        tick();
-      });
-
+      video.addEventListener('play', () => { if (raf) cancelAnimationFrame(raf); tick(); });
       video.addEventListener('ended', () => {
         resetting = true;
         video.style.opacity = '0';
@@ -428,12 +1329,61 @@
           if (p && typeof p.catch === 'function') p.catch(() => {});
         }, 100);
       });
-
-      // In case loadedmetadata already fired
-      if (video.readyState >= 1) {
-        video.dispatchEvent(new Event('loadedmetadata'));
-      }
+      if (video.readyState >= 1) video.dispatchEvent(new Event('loadedmetadata'));
     })();
+
+    /* ===== Custom cursor ===== */
+    const cursor = document.getElementById('cursor');
+    let cx = 0, cy = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
+    function cursorLoop() {
+      cx += (tx - cx) * 0.18;
+      cy += (ty - cy) * 0.18;
+      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      requestAnimationFrame(cursorLoop);
+    }
+    cursorLoop();
+    document.querySelectorAll('a, button, summary, .area-row, .servicio-card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    /* ===== Scroll reveal + counters ===== */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          entry.target.querySelectorAll('[data-target]').forEach(animateCount);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function animateCount(el) {
+      if (el.dataset.counted) return;
+      el.dataset.counted = '1';
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const duration = 1600;
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    /* ===== Form ===== */
+    const form = document.getElementById('contactForm');
+    form?.addEventListener('submit', (e) => {
+      if (form.action.includes('YOUR_FORM_ID')) {
+        e.preventDefault();
+        alert('¡Recibido! Recuerda configurar Formspree y reemplazar YOUR_FORM_ID en el código.');
+      }
+    });
   </script>
 </body>
 </html>
