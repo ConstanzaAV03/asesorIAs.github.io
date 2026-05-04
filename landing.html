@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cadencIAsesorías</title>
+  <meta name="description" content="IA aplicada para empresas. Sin tecnicismos, al ritmo de tu gente." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+
+  <!-- Geist (cuerpo) -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- General Sans (titular) -->
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============ Tokens ============ */
+    :root {
+      --background: hsl(260 87% 3%);
+      --foreground: hsl(40 6% 95%);
+      --hero-sub: hsl(40 6% 82%);
+      --foreground-90: hsla(40, 6%, 95%, 0.9);
+      --foreground-80: hsla(40, 6%, 95%, 0.8);
+      --foreground-50: hsla(40, 6%, 95%, 0.5);
+      --foreground-20: hsla(40, 6%, 95%, 0.2);
+    }
+
+    /* ============ Reset ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Geist', system-ui, -apple-system, sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* ============ Page wrapper ============ */
+    .index-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--background);
+    }
+    .bg-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ============ Hero section ============ */
+    .hero-section {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      overflow: visible;
+    }
+    /* Blurred shape behind content */
+    .bg-blur {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 984px; height: 527px;
+      max-width: 100%;
+      background: hsl(0 0% 4%);
+      opacity: 0.9;
+      filter: blur(82px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ============ Navbar ============ */
+    .navbar {
+      position: relative;
+      z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2rem;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.6rem;
+      height: 32px;
+    }
+    .nav-logo-mark {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'General Sans', sans-serif;
+      font-weight: 600; font-size: 0.95rem;
+      color: white;
+    }
+    .nav-logo-text {
+      font-family: 'General Sans', sans-serif;
+      font-weight: 500; font-size: 1.05rem;
+      color: var(--foreground);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo-text em {
+      font-style: normal;
+      background: linear-gradient(to left, #6366f1, #a855f7, #fcd34d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-center {
+      display: flex; gap: 0.5rem; align-items: center;
+    }
+    .nav-item {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.45rem 0.9rem;
+      color: var(--foreground-90);
+      font-size: 0.92rem;
+      font-weight: 400;
+      transition: color 0.2s ease;
+      border-radius: 999px;
+    }
+    .nav-item:hover { color: var(--foreground); }
+    .chevron {
+      width: 14px; height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      opacity: 0.7;
+    }
+
+    /* Hero Secondary button (used for Sign Up + CTA) */
+    .btn-hero-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--foreground);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+    .nav-cta {
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      font-size: 0.88rem;
+    }
+
+    /* Divider line below navbar */
+    .nav-divider {
+      height: 1px;
+      margin-top: 3px;
+      background: linear-gradient(to right, transparent, var(--foreground-20), transparent);
+      position: relative; z-index: 20;
+    }
+
+    /* ============ Hero main content ============ */
+    .hero-main {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative; z-index: 5;
+    }
+    .hero-headline {
+      font-family: 'General Sans', sans-serif;
+      font-weight: 400;
+      font-size: clamp(4rem, 16vw, 220px);
+      line-height: 1.02;
+      letter-spacing: -0.024em;
+      color: var(--foreground);
+    }
+    .hero-headline .grad {
+      background: linear-gradient(to left, #6366f1, #a855f7, #fcd34d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-subtitle {
+      color: var(--hero-sub);
+      font-size: 1.125rem;
+      line-height: 2rem;
+      max-width: 28rem;
+      margin-top: 9px;
+      opacity: 0.8;
+    }
+    .hero-cta {
+      margin-top: 25px;
+      padding: 24px 29px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+    }
+
+    /* ============ Logo marquee ============ */
+    .logo-marquee {
+      position: relative; z-index: 10;
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 0 2rem 2.5rem;
+      width: 100%;
+      display: flex; align-items: center; gap: 3rem;
+    }
+    .marquee-static {
+      flex-shrink: 0;
+      color: var(--foreground-50);
+      font-size: 0.875rem;
+      line-height: 1.4;
+    }
+    .marquee-window {
+      flex: 1;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .marquee-track {
+      display: flex; gap: 4rem;
+      width: max-content;
+      animation: scrollLogos 20s linear infinite;
+    }
+    @keyframes scrollLogos {
+      from { transform: translateX(0%); }
+      to { transform: translateX(-50%); }
+    }
+    .logo-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    .logo-mark {
+      width: 1.5rem; height: 1.5rem;
+      border-radius: 0.5rem;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'General Sans', sans-serif;
+      font-weight: 600; font-size: 0.72rem;
+      color: var(--foreground);
+    }
+    .logo-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    /* ============ Liquid glass utility ============ */
+    .liquid-glass {
+      background: rgba(255, 255, 255, 0.01);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg,
+        rgba(255,255,255,0.45) 0%,
+        rgba(255,255,255,0.15) 20%,
+        rgba(255,255,255,0) 40%,
+        rgba(255,255,255,0) 60%,
+        rgba(255,255,255,0.15) 80%,
+        rgba(255,255,255,0.45) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+              mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ============ Responsive ============ */
+    @media (max-width: 820px) {
+      .nav-center { display: none; }
+      .navbar { padding: 1rem 1.25rem; }
+      .hero-subtitle { font-size: 1rem; line-height: 1.6rem; }
+      .hero-cta { padding: 18px 22px; }
+      .logo-marquee { flex-direction: column; gap: 1.5rem; padding: 0 1.25rem 2rem; }
+      .marquee-static { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="index-wrapper">
+
+    <!-- Background video -->
+    <video class="bg-video" id="bgVideo" muted playsinline preload="auto">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Hero section -->
+    <section class="hero-section">
+
+      <!-- Blurred shape behind content -->
+      <div class="bg-blur" aria-hidden="true"></div>
+
+      <!-- Navbar -->
+      <nav class="navbar">
+        <a href="#" class="nav-logo" aria-label="cadencIAsesorías">
+          <div class="nav-logo-mark">c</div>
+          <span class="nav-logo-text">cadenc<em>IA</em>sesorías</span>
+        </a>
+
+        <div class="nav-center">
+          <button class="nav-item">
+            Servicios
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <button class="nav-item">Casos</button>
+          <button class="nav-item">Planes</button>
+          <button class="nav-item">
+            Aprende
+            <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+        </div>
+
+        <button class="btn-hero-secondary nav-cta liquid-glass">Ingresar</button>
+      </nav>
+
+      <!-- Divider -->
+      <div class="nav-divider" aria-hidden="true"></div>
+
+      <!-- Main hero content -->
+      <main class="hero-main">
+        <h1 class="hero-headline">
+          cadenc<span class="grad">IA</span>
+        </h1>
+        <p class="hero-subtitle">
+          La forma más humana de adoptar inteligencia artificial<br />
+          en tu equipo, sin tecnicismos.
+        </p>
+        <button class="btn-hero-secondary hero-cta liquid-glass">
+          Agenda un diagnóstico
+        </button>
+      </main>
+
+      <!-- Logo marquee -->
+      <div class="logo-marquee">
+        <div class="marquee-static">
+          Aplicado en empresas<br />de todo Chile
+        </div>
+        <div class="marquee-window">
+          <div class="marquee-track" id="marqueeTrack">
+            <!-- Set 1 -->
+            <div class="logo-item"><div class="logo-mark liquid-glass">V</div><span class="logo-name">Vortex</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">N</div><span class="logo-name">Nimbus</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">P</div><span class="logo-name">Prysma</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">C</div><span class="logo-name">Cirrus</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">K</div><span class="logo-name">Kynder</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">H</div><span class="logo-name">Halcyn</span></div>
+            <!-- Set 2 (duplicated for seamless loop) -->
+            <div class="logo-item"><div class="logo-mark liquid-glass">V</div><span class="logo-name">Vortex</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">N</div><span class="logo-name">Nimbus</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">P</div><span class="logo-name">Prysma</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">C</div><span class="logo-name">Cirrus</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">K</div><span class="logo-name">Kynder</span></div>
+            <div class="logo-item"><div class="logo-mark liquid-glass">H</div><span class="logo-name">Halcyn</span></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <script>
+    /* ===== Background video fade loop ===== */
+    (function() {
+      const video = document.getElementById('bgVideo');
+      if (!video) return;
+
+      const FADE = 0.5; // seconds for fade in / out
+      let raf = null;
+      let resetting = false;
+
+      function tick() {
+        if (resetting) {
+          raf = requestAnimationFrame(tick);
+          return;
+        }
+        const t = video.currentTime;
+        const d = video.duration;
+        if (!isNaN(d) && d > 0) {
+          let opacity = 1;
+          if (t < FADE) {
+            opacity = t / FADE;
+          } else if (t > d - FADE) {
+            opacity = Math.max(0, (d - t) / FADE);
+          }
+          video.style.opacity = opacity.toFixed(3);
+        }
+        raf = requestAnimationFrame(tick);
+      }
+
+      video.addEventListener('loadedmetadata', () => {
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(() => { /* autoplay blocked — silent fallback */ });
+        }
+      });
+
+      video.addEventListener('play', () => {
+        if (raf) cancelAnimationFrame(raf);
+        tick();
+      });
+
+      video.addEventListener('ended', () => {
+        resetting = true;
+        video.style.opacity = '0';
+        setTimeout(() => {
+          video.currentTime = 0;
+          resetting = false;
+          const p = video.play();
+          if (p && typeof p.catch === 'function') p.catch(() => {});
+        }, 100);
+      });
+
+      // In case loadedmetadata already fired
+      if (video.readyState >= 1) {
+        video.dispatchEvent(new Event('loadedmetadata'));
+      }
+    })();
+  </script>
+</body>
+</html>
