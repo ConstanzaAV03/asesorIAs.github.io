@@ -781,6 +781,145 @@
 
     ::selection { background: var(--accent); color: var(--bg); }
 
+    /* ============ Servicios price tag (added) ============ */
+    .servicio-price {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.6rem;
+    }
+    .servicio-price .from {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .servicio-detail {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500;
+      margin-left: auto;
+    }
+    .servicio-detail:hover { color: var(--ink); }
+    .servicio-card.featured .servicio-price { border-color: rgba(10, 22, 40, 0.2); color: var(--bg); }
+    .servicio-card.featured .servicio-price .from { color: rgba(10, 22, 40, 0.55); }
+
+    /* ============ Automatización (3 niveles + partner) ============ */
+    .auto-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+      margin-top: 4rem;
+    }
+    @media (max-width: 980px) { .auto-grid { grid-template-columns: 1fr; } }
+    .auto-card {
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 2rem;
+      display: flex; flex-direction: column;
+      transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), background 0.5s var(--ease);
+    }
+    .auto-card:hover { transform: translateY(-4px); border-color: var(--accent); background: var(--bg-soft); }
+    .auto-card.featured {
+      background: var(--bg-soft);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 30px 80px -20px rgba(56, 189, 248, 0.2);
+    }
+    .auto-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .auto-level {
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem; color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+    .auto-time {
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint); font-weight: 500;
+    }
+    .auto-card h3 { color: var(--ink); margin-bottom: 0.7rem; font-size: clamp(1.2rem, 1.6vw, 1.4rem); }
+    .auto-card > p { color: var(--ink-muted); font-size: 0.92rem; margin-bottom: 1.3rem; line-height: 1.55; }
+    .auto-card ul { list-style: none; flex: 1; margin: 0; padding: 0; }
+    .auto-card li {
+      padding: 0.55rem 0;
+      font-size: 0.85rem; color: var(--ink-muted);
+      border-top: 1px solid var(--line);
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .auto-card li::before { content: "→"; color: var(--accent); flex-shrink: 0; }
+    .auto-price {
+      margin-top: 1.5rem; padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem; color: var(--ink);
+      display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .auto-price .from {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .auto-applies { margin-top: 5rem; }
+    .auto-applies-title {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ink-faint); font-weight: 500;
+      margin-bottom: 1.2rem;
+    }
+    .auto-applies-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .auto-applies-list span {
+      padding: 0.55rem 1rem;
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.18);
+      border-radius: 999px;
+      font-size: 0.85rem; color: var(--ink);
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .auto-applies-list span:hover { background: rgba(56, 189, 248, 0.12); border-color: var(--accent); }
+
+    /* Partner card (Prompto) */
+    .partner-card {
+      margin-top: 5rem;
+      padding: clamp(1.8rem, 3vw, 2.8rem);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.06), rgba(16, 185, 129, 0.04));
+      border: 1px solid rgba(56, 189, 248, 0.22);
+      border-radius: 12px;
+      position: relative;
+    }
+    .partner-tag {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent-2); font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .partner-card h3 {
+      color: var(--ink);
+      font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+      margin-bottom: 1rem;
+    }
+    .partner-card > p { color: var(--ink); font-size: 1rem; max-width: 720px; margin-bottom: 2rem; line-height: 1.6; }
+    .partner-modes {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+      padding-top: 1.5rem; border-top: 1px solid var(--line);
+    }
+    @media (max-width: 820px) { .partner-modes { grid-template-columns: 1fr; } }
+    .partner-mode strong {
+      display: block; color: var(--ink);
+      font-family: 'Fraunces', serif; font-size: 1.05rem;
+      font-weight: 400; margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .partner-mode span { color: var(--ink-muted); font-size: 0.88rem; line-height: 1.55; }
+    .partner-note {
+      margin-top: 1.5rem; padding-top: 1.2rem;
+      border-top: 1px solid var(--line);
+      font-size: 0.78rem; color: var(--ink-faint);
+      line-height: 1.5;
+    }
+    .partner-note a { color: var(--accent); }
+
     @media (max-width: 820px) {
       .nav-right { gap: 0; }
       .nav-item { padding: 0.4rem 0.5rem; font-size: 0.8rem; }
@@ -938,37 +1077,140 @@
       </div>
       <div class="servicios-grid">
         <div class="servicio-card reveal">
-          <span class="servicio-tag">Punto de partida</span>
-          <h3>Diagnóstico inicial</h3>
-          <p>Una conversación de 45 minutos, gratuita, para identificar oportunidades concretas en tu empresa.</p>
+          <span class="servicio-tag">Línea B · Por sesión</span>
+          <h3>Asesoría de Procesos IA</h3>
+          <p>Diagnóstico, optimización y acompañamiento. Cada sesión cierra con un entregable concreto, no con una "pauta a seguir".</p>
           <ul>
-            <li>Conversación sin compromiso</li>
-            <li>Mapa de oportunidades por área</li>
-            <li>Recomendaciones priorizadas</li>
+            <li>Diagnóstico inicial (sesión única)</li>
+            <li>Sesiones individuales de 2 horas</li>
+            <li>Paquete mensual con prioridad de agenda</li>
+            <li>Confidencialidad absoluta</li>
           </ul>
+          <div class="servicio-price"><span class="from">Desde</span>$35.000 CLP</div>
         </div>
         <div class="servicio-card featured reveal">
-          <span class="servicio-tag">Más solicitado</span>
-          <h3>Capacitación grupal</h3>
-          <p>Talleres prácticos para equipos completos, con casos del rubro y herramientas listas para usar al día siguiente.</p>
+          <span class="servicio-tag">Línea A · Más solicitado</span>
+          <h3>Capacitación IA</h3>
+          <p>Curso de 4 sesiones prácticas (8 horas totales) con datos y procesos reales de tu empresa. Cero programación, cero jerga.</p>
           <ul>
-            <li>4 a 8 sesiones en vivo</li>
-            <li>Material por área (RRHH, ventas, etc.)</li>
-            <li>Soporte por WhatsApp 30 días</li>
+            <li>4 sesiones en vivo de 2 horas</li>
+            <li>Casos del rubro de tu empresa</li>
+            <li>Soporte WhatsApp 30 días</li>
             <li>Plantillas y prompts a medida</li>
           </ul>
+          <div class="servicio-price"><span class="from">Desde</span>$240.000 CLP / curso</div>
         </div>
         <div class="servicio-card reveal">
-          <span class="servicio-tag">Para líderes</span>
-          <h3>Asesoría ejecutiva 1 a 1</h3>
-          <p>Sesiones privadas para ejecutivos que necesitan ponerse al día sin sentir que están retrocediendo.</p>
+          <span class="servicio-tag">Línea C · Precio cerrado</span>
+          <h3>Proyectos de Automatización</h3>
+          <p>Encargos con alcance definido y precio fijo. Levantamiento de requerimientos sin costo, ejecución sin sorpresas.</p>
           <ul>
-            <li>Sesiones individuales semanales</li>
-            <li>Confidencialidad absoluta</li>
-            <li>Ritmo a tu medida</li>
+            <li>3 niveles según complejidad</li>
+            <li>Reportes, integraciones y agentes IA</li>
+            <li>30 días de soporte post-entrega</li>
+            <li>Cotización formal antes de empezar</li>
           </ul>
+          <div class="servicio-price"><span class="from">Desde</span>$400.000 CLP <a href="#automatizacion" class="servicio-detail">Ver detalle ↓</a></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============ AUTOMATIZACIÓN ============ -->
+  <section class="lusion-section" id="automatizacion">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">05 — Automatización</span></div>
+          <h2>Proyectos a medida, <span class="it">precio cerrado</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.1rem; color: var(--ink); max-width: 540px;">
+            Define el alcance, te entregamos cotización formal sin costo, ejecutamos al precio fijo acordado. Sin sorpresas en la facturación.
+          </p>
+        </div>
+      </div>
+
+      <div class="auto-grid reveal">
+        <div class="auto-card">
+          <div class="auto-head">
+            <span class="auto-level">Básico</span>
+            <span class="auto-time">1–2 sem</span>
+          </div>
+          <h3>Flujos lineales</h3>
+          <p>1 a 2 herramientas conectadas, sin lógica compleja. Para automatizar tareas puntuales que se repiten cada semana.</p>
+          <ul>
+            <li>Formulario → planilla → correo</li>
+            <li>Notificaciones automáticas</li>
+            <li>Plantillas y triggers simples</li>
+          </ul>
+          <div class="auto-price"><span class="from">Desde</span>$400.000 CLP</div>
+        </div>
+
+        <div class="auto-card featured">
+          <div class="auto-head">
+            <span class="auto-level">Intermedio</span>
+            <span class="auto-time">2–4 sem</span>
+          </div>
+          <h3>Múltiples sistemas + IA</h3>
+          <p>Lógica condicional, IA integrada en el flujo, varias herramientas conectadas. El sweet spot de la mayoría de los proyectos.</p>
+          <ul>
+            <li>Reportes con extracción de datos</li>
+            <li>Integraciones CRM / planillas</li>
+            <li>Generación automática de documentos</li>
+          </ul>
+          <div class="auto-price">$900.000 — $2.500.000 CLP</div>
+        </div>
+
+        <div class="auto-card">
+          <div class="auto-head">
+            <span class="auto-level">Avanzado</span>
+            <span class="auto-time">4–8 sem</span>
+          </div>
+          <h3>Agentes IA y arquitectura</h3>
+          <p>Agentes autónomos, integraciones complejas, múltiples sistemas conversando entre sí. Para procesos críticos de la empresa.</p>
+          <ul>
+            <li>Agentes 24/7 conectados al CRM</li>
+            <li>Pipelines de datos en tiempo real</li>
+            <li>Arquitecturas multi-sistema</li>
+          </ul>
+          <div class="auto-price">$2.500.000 — $6.000.000 CLP</div>
+        </div>
+      </div>
+
+      <div class="auto-applies reveal">
+        <div class="auto-applies-title">¿Qué se puede automatizar?</div>
+        <div class="auto-applies-list">
+          <span>Reportes automáticos</span>
+          <span>Notificaciones a clientes</span>
+          <span>Generación de documentos</span>
+          <span>Formularios → planillas → correos</span>
+          <span>Dashboards en vivo</span>
+          <span>Agentes IA conversacionales</span>
+          <span>Conciliaciones bancarias</span>
+          <span>Filtros de CV automáticos</span>
+        </div>
+      </div>
+
+      <div class="partner-card reveal">
+        <div class="partner-tag">✦ Servicio partner</div>
+        <h3>Chatbot WhatsApp <span class="it-soft">por Prompto</span></h3>
+        <p>Asistente conversacional con IA que opera sobre WhatsApp, desarrollado por Reity. Se ofrece como componente complementario vía partnership — la cotización y el contrato son directos con Reity, y nosotros coordinamos la implementación.</p>
+        <div class="partner-modes">
+          <div class="partner-mode">
+            <strong>Modo 1 · Atención al cliente</strong>
+            <span>Respuestas 24/7 automáticas, escala a humano cuando es necesario, panel de supervisión en tiempo real, integración con CRM y base de datos.</span>
+          </div>
+          <div class="partner-mode">
+            <strong>Modo 2 · Vendedor activo</strong>
+            <span>Sale proactivamente al lead, califica oportunidades, cierra ventas en el chat, multi-asistente para distintas campañas, integración oficial Meta.</span>
+          </div>
+        </div>
+        <div class="partner-note">
+          Cotización directa con Reity según volumen de conversaciones y nivel de integración. Para demo: <a href="mailto:jarancibia@reity.cl">jarancibia@reity.cl</a> · +56 9 8208 1388
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -977,7 +1219,7 @@
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">05 — En la práctica</span></div>
+          <div class="section-num"><span class="meta">06 — En la práctica</span></div>
           <h2>Cómo se ve la IA en tu <span class="it">día a día</span>.</h2>
         </div>
         <div>
@@ -1146,7 +1388,7 @@
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">06 — Áreas</span></div>
+          <div class="section-num"><span class="meta">07 — Áreas</span></div>
           <h2>IA aplicada al <span class="it-soft">trabajo real</span>.</h2>
         </div>
         <div>
@@ -1183,7 +1425,7 @@
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">07 — Estudio</span></div>
+          <div class="section-num"><span class="meta">08 — Estudio</span></div>
           <h2>Empezamos con un equipo que <span class="it-soft">no se atrevía</span>.</h2>
         </div>
         <div class="sobre-text">
@@ -1200,7 +1442,7 @@
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">08 — Preguntas</span></div>
+          <div class="section-num"><span class="meta">09 — Preguntas</span></div>
           <h2>Lo que más nos <span class="it">preguntan</span>.</h2>
         </div>
         <div></div>
@@ -1234,7 +1476,7 @@
   <section class="lusion-section contacto" id="contacto">
     <div class="wrap">
       <div class="reveal">
-        <div class="section-num"><span class="meta">09 — Conversemos</span></div>
+        <div class="section-num"><span class="meta">10 — Conversemos</span></div>
         <h2 class="contacto-h">Empieza con un <span class="it">diagnóstico</span> gratuito.</h2>
       </div>
 
